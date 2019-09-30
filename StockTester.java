@@ -36,5 +36,6 @@ class StockTester {
         //test RQE
         stock.setRQE(98.7);
         assertEquals(stock.getRQE(), 98.7);
+        //comment
     }
 }
