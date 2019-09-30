@@ -7,17 +7,10 @@ public class Stock {
 	private double trend;
 	private double RQE; //recent quarter earnings
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	//default constructor
+	public Stock() {
+	    
+	}
 	public String getName() {
 		return name;
 	}
