@@ -19,7 +19,7 @@ public class TestyStuff extends JFrame {
                     TestyStuff frame = new TestyStuff();
                     frame.setVisible(true);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    e.printStackTrace(); //comment
                 }
             }
         });
