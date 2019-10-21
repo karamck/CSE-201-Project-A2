@@ -79,6 +79,17 @@ public class login extends JFrame {
 		
 		JButton btnLogin = new JButton("Login");
 		btnLogin.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
+		btnLogin.addActionListener(new ActionListener()
+	    {
+	      public void actionPerformed(ActionEvent e)
+	      {
+	        // print login attempt
+	        System.out.print("Username: " + textField.getText() + "\nPassword: " + passwordField.getText());
+	      }
+	    });
+		
+		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
