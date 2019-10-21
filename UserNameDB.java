@@ -4,16 +4,27 @@ import java.util.Scanner;
 
 public class UserNameDB {
 
-    public static void main(String[] args) {
-        // TODO Auto-generated method stub
-        File unDB = new File("Usernames_Passwords");
+//    public static void main(String[] args) {
+//        File unDB = new File("Usernames_Passwords.txt");
+//        try {
+//            Scanner dbReader = new Scanner(unDB);
+//
+//            dbReader.close();
+//        } catch (FileNotFoundException exception) {
+//            System.out.println("File not found");
+//        }
+//
+//    }
+
+    public static boolean checkPW(String userName, String pw) {
+        File unDB = new File("Usernames_Passwords.txt");
         try {
-            Scanner dictReader = new Scanner(unDB);
+            Scanner dbReader = new Scanner(unDB);
             
-            dictReader.close();
+            dbReader.close();
         } catch (FileNotFoundException exception) {
             System.out.println("File not found");
         }
-
+        return false;
     }
 }
