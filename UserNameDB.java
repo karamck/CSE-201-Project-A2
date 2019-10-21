@@ -6,9 +6,9 @@ public class UserNameDB {
 
     public static void main(String[] args) {
         // TODO Auto-generated method stub
-        File engWords = new File("Usernames_Passwords");
+        File unDB = new File("Usernames_Passwords");
         try {
-            Scanner dictReader = new Scanner(engWords);
+            Scanner dictReader = new Scanner(unDB);
             
             dictReader.close();
         } catch (FileNotFoundException exception) {
