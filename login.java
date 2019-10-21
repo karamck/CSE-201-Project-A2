@@ -24,6 +24,7 @@ public class login extends JFrame {
 	private JPanel contentPane;
 	private JPasswordField passwordField;
 	private JTextField textField;
+	private String un;
 
 	/**
 	 * Launch the application.
@@ -40,6 +41,7 @@ public class login extends JFrame {
 			}
 		});
 	}
+	
 
 	/**
 	 * Create the frame.
@@ -61,9 +63,10 @@ public class login extends JFrame {
 		passwordField = new JPasswordField();
 		passwordField.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
+	
 		textField = new JTextField();
 		textField.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		textField.setColumns(10);
+		textField.setColumns(10);		
 		
 		JButton btnLogin = new JButton("Login");
 		btnLogin.setFont(new Font("Tahoma", Font.PLAIN, 18));

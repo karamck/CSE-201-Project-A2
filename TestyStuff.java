@@ -58,7 +58,7 @@ public class TestyStuff extends JFrame {
         Bowse_panel.add(scrollPane);
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         
-        JLabel lblStockBowse_1 = new JLabel("Stock Bowse");
+        JLabel lblStockBowse_1 = new JLabel("Stock Browse");
         scrollPane.setColumnHeaderView(lblStockBowse_1);
         
         JPanel panel = new JPanel();
