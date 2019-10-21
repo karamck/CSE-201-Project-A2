@@ -4,17 +4,12 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JTextPane;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import javax.swing.JTextField;
-import javax.swing.JSplitPane;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.BoxLayout;
-import java.awt.Component;
 import java.awt.FlowLayout;
 import javax.swing.JButton;
+import javax.swing.JList;
+import javax.swing.JSeparator;
 
 public class TestyStuff extends JFrame {
 
@@ -46,30 +41,34 @@ public class TestyStuff extends JFrame {
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
-        contentPane.setLayout(new BorderLayout(0, 0));
+        contentPane.setLayout(new BorderLayout(10, 10));
         
-        JPanel Bowse_panel = new JPanel();
-        contentPane.add(Bowse_panel);
-        Bowse_panel.setLayout(new BoxLayout(Bowse_panel, BoxLayout.X_AXIS));
+        JPanel browser_panel = new JPanel();
+        contentPane.add(browser_panel);
+        browser_panel.setLayout(new BoxLayout(browser_panel, BoxLayout.Y_AXIS));
         
-        JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setAlignmentY(Component.TOP_ALIGNMENT);
-        scrollPane.setAlignmentX(Component.LEFT_ALIGNMENT);
-        Bowse_panel.add(scrollPane);
-        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        JLabel browserLabel = new JLabel("New label");
+        browser_panel.add(browserLabel);
         
-        JLabel lblStockBowse_1 = new JLabel("Stock Bowse");
-        scrollPane.setColumnHeaderView(lblStockBowse_1);
+        JSeparator separator = new JSeparator();
+        browser_panel.add(separator);
         
-        JPanel panel = new JPanel();
-        contentPane.add(panel, BorderLayout.NORTH);
-        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        JList<Stock> stocklist = new JList<Stock>();
+        browser_panel.add(stocklist);
         
-        JSplitPane splitPane = new JSplitPane();
-        panel.add(splitPane);
+        JPanel topbar = new JPanel();
+        contentPane.add(topbar, BorderLayout.NORTH);
+        topbar.setLayout(new BoxLayout(topbar, BoxLayout.X_AXIS));
+        
+        JPanel panelRight = new JPanel();
+        topbar.add(panelRight);
+        panelRight.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
+        
+        JLabel lblStockItTo = new JLabel("Stock It To Me");
+        panelRight.add(lblStockItTo);
         
         JPanel panel_1 = new JPanel();
-        splitPane.setRightComponent(panel_1);
+        topbar.add(panel_1);
         panel_1.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
         
         JButton btnLogin = new JButton("Login");
@@ -78,22 +77,17 @@ public class TestyStuff extends JFrame {
         JButton btnSignup = new JButton("Signup");
         panel_1.add(btnSignup);
         
-        JPanel panel_2 = new JPanel();
-        splitPane.setLeftComponent(panel_2);
-        panel_2.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
+        JPanel sidebar = new JPanel();
+        contentPane.add(sidebar, BorderLayout.EAST);
+        sidebar.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
         
-        JLabel lblStockItTo = new JLabel("Stock It To Me");
-        panel_2.add(lblStockItTo);
+        JLabel sidebarLabel = new JLabel("New label");
+        sidebar.add(sidebarLabel);
         
-        JPanel panel_3 = new JPanel();
-        FlowLayout flowLayout = (FlowLayout) panel_3.getLayout();
-        flowLayout.setVgap(15);
-        flowLayout.setHgap(15);
-        flowLayout.setAlignment(FlowLayout.LEFT);
-        contentPane.add(panel_3, BorderLayout.EAST);
+        JSeparator separator_1 = new JSeparator();
+        sidebar.add(separator_1);
         
-        JScrollPane scrollPane_1 = new JScrollPane();
-        panel_3.add(scrollPane_1);
+        JList<Stock> sidebarlist = new JList<Stock>();
+        sidebar.add(sidebarlist);
     }
-
 }
