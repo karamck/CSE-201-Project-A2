@@ -76,7 +76,8 @@ public class login extends JFrame {
 	      public void actionPerformed(ActionEvent e)
 	      {
 	        // print login attempt
-	        System.out.print("Username: " + textField.getText() + "\nPassword: " + passwordField.getText());
+	        //System.out.print("Username: " + textField.getText() + "\nPassword: " + passwordField.getText());
+	    	  System.out.print(UserNameDB.checkPW(textField.getText(), passwordField.getText()));
 	      }
 	    });
 		
