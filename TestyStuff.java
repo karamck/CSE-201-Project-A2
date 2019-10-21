@@ -5,11 +5,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.AbstractListModel;
 import javax.swing.BoxLayout;
 import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JSeparator;
+import javax.swing.ListModel;
+import javax.swing.JScrollPane;
 
 public class TestyStuff extends JFrame {
 
@@ -50,11 +53,20 @@ public class TestyStuff extends JFrame {
         JLabel browserLabel = new JLabel("New label");
         browser_panel.add(browserLabel);
         
-        JSeparator separator = new JSeparator();
-        browser_panel.add(separator);
+        ListModel<String> bigData = new AbstractListModel<String>() {
+            public int getSize() { return Short.MAX_VALUE; }
+            public String getElementAt(int index) { return "TestObj " + index; }
+        };
         
-        JList<Stock> stocklist = new JList<Stock>();
-        browser_panel.add(stocklist);
+        JScrollPane scrollPane = new JScrollPane();
+        browser_panel.add(scrollPane);
+        
+        JPanel panel_2 = new JPanel();
+        scrollPane.setViewportView(panel_2);
+        panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.X_AXIS));
+        
+        JList<String> stocklist = new JList<String>(bigData);
+        panel_2.add(stocklist);
         
         JPanel topbar = new JPanel();
         contentPane.add(topbar, BorderLayout.NORTH);
