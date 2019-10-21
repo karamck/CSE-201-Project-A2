@@ -66,16 +66,7 @@ public class login extends JFrame {
 	
 		textField = new JTextField();
 		textField.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		textField.setColumns(10);
-		textField.addActionListener(new ActionListener(){
-		   
-            public void actionPerformed(ActionEvent cl){
-                System.out.println(textField.getText());
-                un = textField.getText();
-                System.out.println(un);
-            }
-        });
-		
+		textField.setColumns(10);		
 		
 		JButton btnLogin = new JButton("Login");
 		btnLogin.setFont(new Font("Tahoma", Font.PLAIN, 18));
