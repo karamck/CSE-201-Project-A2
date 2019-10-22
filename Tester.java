@@ -1,6 +1,7 @@
 	import static org.junit.jupiter.api.Assertions.*;
-	
-	import java.util.ArrayList;
+
+import java.io.IOException;
+import java.util.ArrayList;
 	
 	import org.junit.jupiter.api.Test;
 
@@ -12,11 +13,17 @@ class Tester {
     void testDB() {
     	//Test checkPW
     	assertEquals(UserNameDB.checkUser("admin", "password"), true);   
+    	assertEquals(UserNameDB.checkUser("admin", "passwordy"), false);
+    	try {
+    	assertEquals(UserNameDB.addUser("testy", "testy"), true);
+    	} catch (IOException e){
+    	    
+    	}
     }//end Database Tester
 	
 	//Start Admin Class Testers
 	@Test
-	void testUserClass() {
+	void testAdminClass() {
         Admin admin = new Admin();
 
         // test name
@@ -30,6 +37,14 @@ class Tester {
         // test adminId
         admin.setUserId(1202);
         assertEquals(admin.getUserId(), 1202);
+        
+        Stock stock = new Stock();
+        
+        assertEquals(admin.addStockToDB(stock), false);
+        
+        assertEquals(admin.removeStockFromDB(stock), false);
+        
+        assertEquals(admin.editStock(stock), false);
     }//end Admin Class Tester
 	
 	//Start Stock Class Tester
@@ -108,4 +123,5 @@ class Tester {
 
 }//end userTester
 
+	
 }

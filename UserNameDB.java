@@ -1,5 +1,8 @@
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class UserNameDB {
@@ -42,6 +45,22 @@ public class UserNameDB {
                 }
             }
             dbReader.close();
+        } catch (FileNotFoundException exception) {
+            System.out.println("File not found");
+        }
+        System.out.println("User Not Found");
+        return false;
+    }
+    
+    public static boolean addUser(String userName, String password) throws IOException {
+        File unDB = new File("Usernames_Passwords.txt");
+        try {
+            FileWriter fw = new FileWriter(unDB, true);
+            BufferedWriter br = new BufferedWriter(fw);
+            br.write("\n" + userName + " " + password);
+            br.close();
+            fw.close();
+            return true;
         } catch (FileNotFoundException exception) {
             System.out.println("File not found");
         }
