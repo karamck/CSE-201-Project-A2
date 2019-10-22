@@ -24,8 +24,6 @@ public class UserNameDB {
         File unDB = new File("Usernames_Passwords.txt");
         try {
             Scanner dbReader = new Scanner(unDB);
-            //get the first line
-            dbReader.nextLine();
             
             while(dbReader.hasNextLine()) {
                 String line = dbReader.nextLine();
