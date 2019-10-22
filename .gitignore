@@ -18,3 +18,11 @@
 /UserNameDB.class
 /DBTester.class
 /databaseTester.class
+/main.class
+/homeScreen.class
+/homeScreen$1.class
+/UserScreen$1.class
+/UserScreen.class
+/PasswordUtils.class
+/ProtectUserPassword.class
+/VerifyProvidedPassword.class
