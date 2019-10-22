@@ -3,7 +3,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 class AdminTest {
-    void testUserClass() {
+    void testAdminClass() {
         Admin admin = new Admin();
 
         // test name
