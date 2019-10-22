@@ -79,5 +79,7 @@ class StockTester {
     @Test
     void dbTest() {
         assertEquals(UserNameDB.checkUser("admin", "password"), true);
+        
+        assertEquals(UserNameDB.checkUser("admin", "passwordy"), false);
     }
 }
