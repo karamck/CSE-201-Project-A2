@@ -8,6 +8,9 @@ import javax.swing.JLabel;
 import javax.swing.AbstractListModel;
 import javax.swing.BoxLayout;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JSeparator;
@@ -85,6 +88,15 @@ public class TestyStuff extends JFrame {
         
         JButton btnLogin = new JButton("Login");
         panel_1.add(btnLogin);
+        
+        btnLogin.addActionListener(new ActionListener()
+	    {
+  	      public void actionPerformed(ActionEvent e)
+  	      {
+  	        login l = new login();
+  	        l.setVisible(true);
+  	      }
+  	    });
         
         JButton btnSignup = new JButton("Signup");
         panel_1.add(btnSignup);
