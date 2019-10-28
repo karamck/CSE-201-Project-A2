@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 import javax.swing.JList;
 
-public class User {
+public class User implements Account {
     String userName;
     int userId;
     String password;
