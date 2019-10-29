@@ -109,11 +109,13 @@ public class TestyStuff extends JFrame {
         panel_1.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
         
         JButton btnLogin = new JButton("Login");
+        /*
         btnLogin.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		loginScreen();
         	}
         });
+        */
         panel_1.add(btnLogin);
         
         btnLogin.addActionListener(new ActionListener()
