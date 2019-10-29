@@ -18,6 +18,7 @@ import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.awt.Color;
 import javax.swing.SwingConstants;
 
@@ -62,10 +63,10 @@ public class login extends JFrame {
 		JLabel lblUsername = new JLabel("Username");
 		lblUsername.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
-		JLabel ErrorMsg = new JLabel("");
-		ErrorMsg.setHorizontalAlignment(SwingConstants.CENTER);
-		ErrorMsg.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		ErrorMsg.setForeground(Color.RED);
+		JLabel Msg = new JLabel("");
+		Msg.setHorizontalAlignment(SwingConstants.CENTER);
+		Msg.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		Msg.setForeground(Color.RED);
 		
 		
 		passwordField = new JPasswordField();
@@ -86,17 +87,54 @@ public class login extends JFrame {
 	        // print login attempt
 	        //System.out.print("Username: " + textField.getText() + "\nPassword: " + passwordField.getText());
 	    	  if (UserNameDB.checkUser(textField.getText(), passwordField.getText())) {
-	    		  System.exit(0);
+	    		  //System.exit(0);
+	    		  System.out.println(passwordField.getPassword().toString());
 	    	  }
 	    	  else {
-	    		  ErrorMsg.setText("Incorrect Username or Password");
+	    		  Msg.setForeground(Color.RED);
+	    		  Msg.setText("Incorrect Username or Password");
 	    		  //System.out.println("nope");
 	    	  }
 	    		  
 	      }
 	    });
 		
-
+		JButton btnRegister = new JButton("Register");
+		btnRegister.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		btnRegister.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		
+		btnRegister.addActionListener(new ActionListener()
+	    {
+	      public void actionPerformed(ActionEvent e)
+	      {
+	        // print login attempt
+	        //System.out.print("Username: " + textField.getText() + "\nPassword: " + passwordField.getText());
+	    	  int temp;
+    		  Msg.setText("");
+			try {
+				temp = UserNameDB.addUser(textField.getText(), passwordField.getText());
+		    	  if (temp == 0) {
+		    		  Msg.setForeground(Color.GREEN);
+		    		  Msg.setText("User Created");
+		    	  }
+		    	  else if (temp == 2) {
+		    		  Msg.setForeground(Color.RED);
+		    		  Msg.setText("Username taken");
+		    	  }
+		    	  else {
+		    		  Msg.setForeground(Color.RED);
+		    		  Msg.setText("Invaild. No spaces in username or password.");
+		    		  //System.out.println("nope");
+		    	  }
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}	  
+	      }
+	    });
 		
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
@@ -116,10 +154,12 @@ public class login extends JFrame {
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addComponent(textField, 258, 258, 258)
 								.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, 256, GroupLayout.PREFERRED_SIZE)))
+						.addComponent(Msg, GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(132)
-							.addComponent(btnLogin, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE))
-						.addComponent(ErrorMsg, GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE))
+							.addGap(40)
+							.addComponent(btnLogin, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+							.addGap(44)
+							.addComponent(btnRegister, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
@@ -134,9 +174,11 @@ public class login extends JFrame {
 						.addComponent(lblPassword, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)
 						.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
-					.addComponent(ErrorMsg, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
+					.addComponent(Msg, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(btnLogin, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnLogin, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnRegister, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
 					.addGap(26))
 		);
 		contentPane.setLayout(gl_contentPane);
