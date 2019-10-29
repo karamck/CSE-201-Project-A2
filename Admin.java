@@ -1,5 +1,5 @@
 
-public class Admin {
+public class Admin implements Account {
     String userName;
     int userId;
     String password;
@@ -27,6 +27,15 @@ public class Admin {
     }
     public void setPassword(String password) {
         this.password = password;
+    }
+    public boolean addStockToDB(Stock stock) {
+        return false;
+    }
+    public boolean removeStockFromDB(Stock stock) {
+        return false;
+    }
+    public boolean editStock(Stock stock) {
+        return false;
     }
     
 }
