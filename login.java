@@ -28,6 +28,7 @@ public class login extends JFrame {
 	private JPasswordField passwordField;
 	private JTextField textField;
 	private String un;
+	private String user;
 
 	/**
 	 * Launch the application.
@@ -45,11 +46,15 @@ public class login extends JFrame {
 		});
 	}
 	
+	public String getUser() {
+		return user;
+	}
 
 	/**
 	 * Create the frame.
 	 */
 	public login() {
+
 		setTitle("StockItToMe");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -87,8 +92,9 @@ public class login extends JFrame {
 	        // print login attempt
 	        //System.out.print("Username: " + textField.getText() + "\nPassword: " + passwordField.getText());
 	    	  if (UserNameDB.checkUser(textField.getText(), passwordField.getText())) {
-	    		  //System.exit(0);
+	    		  user = textField.getText();
 	    		  System.out.println("Login Success");
+	    		  System.exit(0);
 	    	  }
 	    	  else {
 	    		  Msg.setForeground(Color.RED);
