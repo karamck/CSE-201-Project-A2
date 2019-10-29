@@ -53,8 +53,8 @@ public class UserNameDB {
     }
     
     public static int addUser(String userName, String password) throws IOException {
-    	/* return of 0 is succesful
-    	 * return of 1 is invailid username or password
+    	/* return of 0 is successful
+    	 * return of 1 is invalid username or password
     	 * return of 2 is username already taken
     	 * default return is 3
     	 */
