@@ -88,7 +88,7 @@ public class login extends JFrame {
 	        //System.out.print("Username: " + textField.getText() + "\nPassword: " + passwordField.getText());
 	    	  if (UserNameDB.checkUser(textField.getText(), passwordField.getText())) {
 	    		  //System.exit(0);
-	    		  System.out.println(passwordField.getPassword().toString());
+	    		  System.out.println("Login Success");
 	    	  }
 	    	  else {
 	    		  Msg.setForeground(Color.RED);
