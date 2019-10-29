@@ -1,29 +1,39 @@
 	import static org.junit.jupiter.api.Assertions.*;
-
-import java.io.IOException;
-import java.util.ArrayList;
+	
+	import java.util.ArrayList;
 	
 	import org.junit.jupiter.api.Test;
 
 
 class Tester {
 	
-	//start Database Tester
+	/*
+	 * 
+	 * start PopulateData
+	 */
+	void testPopulate() {
+	//assertFalse(TestyStuff.PopulateData());
+	}
+	
+	
+	/*
+	 * 
+	 * start Database Tester
+	 */
 	@Test
     void testDB() {
-    	//Test checkPW
-    	assertEquals(UserNameDB.checkUser("admin", "password"), true);   
-    	assertEquals(UserNameDB.checkUser("admin", "passwordy"), false);
-    	try {
-    	assertEquals(UserNameDB.addUser("testy", "testy"), true);
-    	} catch (IOException e){
-    	    
-    	}
+     //Test checkPW
+    	assertEquals(UserNameDB.checkUser("admin", "password"), true);
+        assertTrue(UserNameDB.checkUser("admin", "password"));
+        assertTrue(UserNameDB.checkUser("Hundo", "P"));
     }//end Database Tester
 	
-	//Start Admin Class Testers
+	/*
+	 * 
+	 * Start Admin Class Testers
+	 */
 	@Test
-	void testAdminClass() {
+	void testUserClass() {
         Admin admin = new Admin();
 
         // test name
@@ -37,17 +47,12 @@ class Tester {
         // test adminId
         admin.setUserId(1202);
         assertEquals(admin.getUserId(), 1202);
-        
-        Stock stock = new Stock();
-        
-        assertEquals(admin.addStockToDB(stock), false);
-        
-        assertEquals(admin.removeStockFromDB(stock), false);
-        
-        assertEquals(admin.editStock(stock), false);
     }//end Admin Class Tester
 	
-	//Start Stock Class Tester
+	/*
+	 * 
+	 * Start Stock Class Tester
+	 */
     @Test
     void testStockClass() {
       //test default constructor
@@ -88,40 +93,49 @@ class Tester {
     }//end Stock Tester
     
     
-	//Start User Class Tester
+	/*
+	 * 
+	 * Start User Class Tester
+	 */
 	@Test
     void testerUserClass() {
         //test default constructor
-    User user = new User();
+		User user = new User();
     
-    //test name
-    user.setUserName("name");
-    assertEquals(user.getUserName(), "name");
+		//test name
+		user.setUserName("name");
+		assertEquals(user.getUserName(), "name");
     
-  //test UserId
-    user.setUserId(1202);
-    assertEquals(user.getUserId(), 1202);
-    
-  //test Password
-    user.setPassword("password");
-    assertEquals(user.getPassword(), "password");
-    
-  //test stock list
+		//test UserId
+		user.setUserId(1202);
+		assertEquals(user.getUserId(), 1202);
+   
+		//test Password
+		user.setPassword("password");
+		assertEquals(user.getPassword(), "password");
+		
+		//test stock list
     for(int i=0;i<100;i++) {
     	user.stockList.add(new Stock(i+""));
     }
     for(int i=0;i<100;i++) {
     	assertEquals(user.stockList.get(i).getName(), i+"");
     }
-
+    
 }
-
+	/*
+	 * 
+	 * Stock list tester
+	 */
 	@Test 
 	public void testIndexOutOfBoundsException() {
-    User user = new User();
-	assertThrows(IndexOutOfBoundsException.class, () -> user.stockList.get(-1));
-
+		User user = new User();
+		for (int i=0;i<100;i++) {
+			user.addStock(new Stock(i + ""));
+		}
+		assertThrows(IndexOutOfBoundsException.class, () -> user.stockList.get(1000));
+		assertThrows(IndexOutOfBoundsException.class, () -> user.stockList.get(-1));
+		assertEquals(user.stockList.get(50).getName(), "50");
 }//end userTester
 
-	
 }
