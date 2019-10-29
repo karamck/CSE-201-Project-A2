@@ -78,9 +78,9 @@ public class TestyStuff extends JFrame {
         userPane.setLayout(new BorderLayout(0, 0));
         
         
-        JPanel Bowse_panel = new JPanel();
-        userPane.add(Bowse_panel);
-        Bowse_panel.setLayout(new BoxLayout(Bowse_panel, BoxLayout.X_AXIS));
+        JPanel browser_panel = new JPanel();
+        userPane.add(browser_panel);
+        browser_panel.setLayout(new BoxLayout(browser_panel, BoxLayout.X_AXIS));
         
         JScrollPane scrollPane = new JScrollPane();
         browser_panel.add(scrollPane);
@@ -94,7 +94,7 @@ public class TestyStuff extends JFrame {
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         
         JPanel topbar = new JPanel();
-        contentPane.add(topbar, BorderLayout.NORTH);
+        userPane.add(topbar, BorderLayout.NORTH);
         topbar.setLayout(new BoxLayout(topbar, BoxLayout.X_AXIS));
         
         JPanel panelRight = new JPanel();
@@ -137,14 +137,14 @@ public class TestyStuff extends JFrame {
         panel_1.add(btnSignup);
         
         JPanel sidebar = new JPanel();
-        contentPane.add(sidebar, BorderLayout.EAST);
+        userPane.add(sidebar, BorderLayout.EAST);
         sidebar.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
-        
-        JLabel lblStockItTo = new JLabel();
+        /*
+        JLabel lblStockItToIco = new JLabel();
         Icon icon = new ImageIcon(getClass().getResource("stockItIcon.png"));         
-        lblStockItTo.setIcon(icon);
-        panel_2.add(lblStockItTo);
-        
+        lblStockItToIco.setIcon(icon);
+        panel_2.add(lblStockItToIco);
+        */
         JPanel panel_3 = new JPanel();
         panel_3.setMaximumSize(new Dimension(250, 99999));
         FlowLayout flowLayout = (FlowLayout) panel_3.getLayout();
