@@ -199,10 +199,10 @@ public class StockItToMe extends JFrame {
 	 */
 	public void loginScreen() {
 		setTitle("StockItToMe");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
 		loginPane = new JPanel();
 		loginPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		//setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setBounds(100, 100, 450, 300);
 		setContentPane(loginPane);
 		
 		JLabel lblPassword = new JLabel("Password");

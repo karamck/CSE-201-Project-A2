@@ -16,6 +16,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -94,7 +95,8 @@ public class login extends JFrame {
 	    	  if (UserNameDB.checkUser(textField.getText(), passwordField.getText())) {
 	    		  user = textField.getText();
 	    		  System.out.println("Login Success");
-	    		  System.exit(0);
+	    		  closeFrame();
+	    		  //System.exit(0);
 	    	  }
 	    	  else {
 	    		  Msg.setForeground(Color.RED);
@@ -188,5 +190,9 @@ public class login extends JFrame {
 					.addGap(26))
 		);
 		contentPane.setLayout(gl_contentPane);
+	}
+	
+	public void closeFrame() {
+	    this.dispose();
 	}
 }
