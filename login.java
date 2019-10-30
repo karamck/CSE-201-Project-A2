@@ -95,7 +95,8 @@ public class login extends JFrame {
 	    	  if (UserNameDB.checkUser(textField.getText(), passwordField.getText())) {
 	    		  user = textField.getText();
 	    		  System.out.println("Login Success");
-	    		  closeFrame();
+	    		  dispose();
+	    		  //closeFrame();
 	    		  //System.exit(0);
 	    	  }
 	    	  else {
