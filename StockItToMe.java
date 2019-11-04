@@ -18,6 +18,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.AbstractListModel;
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 
@@ -91,10 +92,14 @@ public class StockItToMe extends JFrame {
         mainScrollPane.setMaximumSize(new Dimension(950, 999999));
         browser_panel.add(mainScrollPane);
         
-        JList stockList = new JList();
+        
+        String[] testlist = {"1", "2", "3"};
+        JList<String> stockList = new JList<>(testlist);
         stockList.setPreferredSize(new Dimension(750, 440));
         stockList.setMaximumSize(new Dimension(950, 999999));
         mainScrollPane.add(stockList);
+        
+        
         
         JPanel panel = new JPanel();
         userPane.add(panel, BorderLayout.NORTH);
