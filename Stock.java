@@ -12,13 +12,13 @@ public class Stock {
 	public Stock() {
 	    
 	}
-	public Stock(String name, String description, String index, double value, double trend, double rQE) {
+	public Stock(String name, String description, String index, BigDecimal value, double trend, String nQE) {
 	    this.name = name;
 	    this.description = description;
 	    this.index = index;
 	    this.value = value;
 	    this.trend = trend;
-	    this.RQE = rQE;
+	    this.NQE = nQE;
 	}
 	public Stock(String name) {
 		this.name=name;
@@ -57,6 +57,6 @@ public class Stock {
 		return NQE;
 	}
 	public void setNQE(String nQE) {
-		NQE = nQE;
+		this.NQE = nQE;
 	}
 }
