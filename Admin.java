@@ -1,5 +1,5 @@
 
-public class Admin {
+public class Admin implements Account {
     String userName;
     int userId;
     String password;
