@@ -6,6 +6,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
+
+import yahoofinance.YahooFinance;
+
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.SwingConstants;
@@ -27,6 +30,10 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 import javax.swing.JButton;
 import javax.swing.JList;
@@ -298,14 +305,62 @@ public class StockItToMe extends JFrame {
 		loginPane.setLayout(gl_contentPane);
 	}
     
+	
+	private ArrayList<Stock> populateMarket() throws IOException {
+		Scanner scnr = new Scanner("Market.txt");
+		ArrayList<Stock> market = new ArrayList<Stock>();
+		while(scnr.hasNextLine()) {
+			String index = scnr.nextLine();
+			yahoofinance.Stock s = YahooFinance.get(index);
+			Stock stock = new Stock();
+			stock.setIndex(index);
+			stock.setName(s.getName());
+			stock.setValue(s.getQuote().getPrice());
+			stock.setTrend(0.00);
+			stock.setNQE(s.getStats().getEarningsAnnouncement().toString());
+			market.add(stock);
+		}
+		scnr.close();
+		return market;
+	}
+	
+	
+	private ArrayList<Stock> populatePortfolio(String username) throws IOException {
+		ArrayList<Stock> portfolio = new ArrayList<Stock>();
+		String file = username + ".txt";
+		Scanner scnr = new Scanner(file);
+    	//populate data
+		while(scnr.hasNextLine()) {
+			String index = scnr.nextLine();
+			yahoofinance.Stock s = YahooFinance.get(index);
+			Stock stock = new Stock();
+			stock.setIndex(index);
+			stock.setName(s.getName());
+			stock.setValue(s.getQuote().getPrice());
+			stock.setTrend(0.00);
+			stock.setNQE(s.getStats().getEarningsAnnouncement().toString());
+			portfolio.add(stock);
+		}
+		scnr.close();
+		return portfolio;
+	}
+	
+	private boolean addStockToMarket(String index) throws IOException {
+		FileWriter filewriter = new FileWriter("Market.txt",true);
+		filewriter.write(index);
+		filewriter.close();
+		return true;
+	}
+	private boolean addStockToPortfolio(String index, String username) throws IOException {
+		String file = username + ".txt";
+		FileWriter filewriter = new FileWriter(file,true);
+		filewriter.write(index);
+		filewriter.close();
+		return true;
+	}
+	
 	private User populateData(String username) {
 		User user = new User(username);
-    	//populate data
-		for(int i=0; i<25;i++) {
-			user.addStock(new Stock("stock" + i));
-		}
-		
 		return user;
 	}
-
 }
