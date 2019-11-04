@@ -1,11 +1,12 @@
+import java.math.BigDecimal;
 
 public class Stock {
 	private String name;
 	private String description;
 	private String index;
-	private double value;
+	private BigDecimal value;
 	private double trend;
-	private double RQE; //recent quarter earnings
+	private String NQE; //next quarter earnings
 	
 	//default constructor
 	public Stock() {
@@ -28,10 +29,10 @@ public class Stock {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public double getValue() {
+	public BigDecimal getValue() {
 		return value;
 	}
-	public void setValue(double value) {
+	public void setValue(BigDecimal value) {
 		this.value = value;
 	}
 	public String getDescription() {
@@ -52,10 +53,10 @@ public class Stock {
 	public void setTrend(double trend) {
 		this.trend = trend;
 	}
-	public double getRQE() {
-		return RQE;
+	public String getNQE() {
+		return NQE;
 	}
-	public void setRQE(double rQE) {
-		RQE = rQE;
+	public void setNQE(String nQE) {
+		NQE = nQE;
 	}
 }

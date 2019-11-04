@@ -7,8 +7,12 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 
-import yahoofinance.YahooFinance;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 
+import javax.swing.JTextPane;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.SwingConstants;
@@ -21,7 +25,6 @@ import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.AbstractListModel;
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 
@@ -31,24 +34,22 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 import javax.swing.JButton;
-import javax.swing.JList;
-import javax.swing.JSeparator;
-import javax.swing.ListModel;
-import javax.swing.JScrollPane;
 
-public class StockItToMe extends JFrame {
+//api imports
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Scanner;
+import yahoofinance.YahooFinance;
+
+
+public class TestyStuff extends JFrame {
 	private JPanel loginPane;
 	private JPasswordField passwordField;
 	private JTextField textField;
     private JTable table;  
     private JPanel userPane;
-    private login l;
 	JList<String> list = new JList<String>();
 	
 
@@ -61,7 +62,7 @@ public class StockItToMe extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    StockItToMe frame = new StockItToMe();
+                    TestyStuff frame = new TestyStuff();
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace(); //comment
@@ -73,84 +74,51 @@ public class StockItToMe extends JFrame {
     /**
      * Create the frame.
      */
-    public StockItToMe() {
+    public TestyStuff() {
     	userScreen();
     }
     
     public void userScreen() {
     	setTitle("Stock It To Me");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 969, 555);
+        setBounds(100, 100, 723, 610);
         userPane = new JPanel();
         userPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(userPane);
         userPane.setLayout(new BorderLayout(0, 0));
         
         
-        //=====MAIN CATALOG=====//
+        JPanel Bowse_panel = new JPanel();
+        userPane.add(Bowse_panel);
+        Bowse_panel.setLayout(new BoxLayout(Bowse_panel, BoxLayout.X_AXIS));
         
-        JPanel browser_panel = new JPanel();
-        userPane.add(browser_panel);
-        browser_panel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setAlignmentY(Component.TOP_ALIGNMENT);
+        scrollPane.setAlignmentX(Component.LEFT_ALIGNMENT);
+        Bowse_panel.add(scrollPane);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         
-        JScrollPane mainScrollPane = new JScrollPane();
-        mainScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        mainScrollPane.setPreferredSize(new Dimension(750, 450));
-        mainScrollPane.setMaximumSize(new Dimension(950, 999999));
-        browser_panel.add(mainScrollPane);
-        
-        
-        String[] testlist = {"1", "2", "3"};
-        JList<String> stockList = new JList<>(testlist);
-        stockList.setPreferredSize(new Dimension(750, 440));
-        stockList.setMaximumSize(new Dimension(950, 999999));
-        mainScrollPane.add(stockList);
-        
-        
+        JLabel lblStockBowse_1 = new JLabel("Stock Browse");
+        scrollPane.setColumnHeaderView(lblStockBowse_1);
         
         JPanel panel = new JPanel();
         userPane.add(panel, BorderLayout.NORTH);
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         
-        JPanel topbar = new JPanel();
-        userPane.add(topbar, BorderLayout.NORTH);
-        topbar.setLayout(new BoxLayout(topbar, BoxLayout.X_AXIS));
-        
-        JPanel panelRight = new JPanel();
-        topbar.add(panelRight);
-        panelRight.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
-        
-        JLabel lblStockItTo = new JLabel("Stock It To Me");
-        panelRight.add(lblStockItTo);
-        
-
-        
-        //=====TOP-RIGHT BUTTON GROUP=====//
-        
-        
+        JSplitPane splitPane = new JSplitPane();
+        panel.add(splitPane);
         
         JPanel panel_1 = new JPanel();
-        topbar.add(panel_1);
+        splitPane.setRightComponent(panel_1);
         panel_1.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
         
         JButton btnLogin = new JButton("Login");
-        /*
         btnLogin.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		loginScreen();
         	}
         });
-        */
         panel_1.add(btnLogin);
-        
-        btnLogin.addActionListener(new ActionListener()
-	    {
-  	      public void actionPerformed(ActionEvent e)
-  	      {
-  	        l = new login();
-  	        l.setVisible(true);
-  	      }
-  	    });
         
         JButton btnSignup = new JButton("Signup");
         btnSignup.addActionListener(new ActionListener() {
@@ -163,28 +131,22 @@ public class StockItToMe extends JFrame {
         });
         panel_1.add(btnSignup);
         
+        JPanel panel_2 = new JPanel();
+        splitPane.setLeftComponent(panel_2);
+        panel_2.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
         
-        //=====END TOP-RIGHT BUTTON GROUP=====//
-        
-        //=====SIDEBAR CODE=====//
-        
-        
-        JPanel sidebar = new JPanel();
-        userPane.add(sidebar, BorderLayout.EAST);
-        sidebar.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
-        /*
-        JLabel lblStockItToIco = new JLabel();
+        JLabel lblStockItTo = new JLabel();
         Icon icon = new ImageIcon(getClass().getResource("stockItIcon.png"));         
-        lblStockItToIco.setIcon(icon);
-        panel_2.add(lblStockItToIco);
-        */
+        lblStockItTo.setIcon(icon);
+        panel_2.add(lblStockItTo);
+        
         JPanel panel_3 = new JPanel();
-        sidebar.add(panel_3);
         panel_3.setMaximumSize(new Dimension(250, 99999));
         FlowLayout flowLayout = (FlowLayout) panel_3.getLayout();
         flowLayout.setVgap(15);
         flowLayout.setHgap(15);
         flowLayout.setAlignment(FlowLayout.LEFT);
+        userPane.add(panel_3, BorderLayout.EAST);
         
         JScrollPane scrollPane_1 = new JScrollPane();
         scrollPane_1.setPreferredSize(new Dimension(150, 450));
@@ -198,23 +160,21 @@ public class StockItToMe extends JFrame {
     	list.setPreferredSize(new Dimension(150, 440));
     	list.setMaximumSize(new Dimension(75, 590));
     	list.setBounds(48, 39, 1, 1);
-    	scrollPane_1.setViewportView(list);
     	
         table = new JTable();
         table.setPreferredScrollableViewportSize(new Dimension(150, 400));
-
-        //=====END SIDEBAR=====//
+        scrollPane_1.setViewportView(list);    
 }
-    //===SCARY EXPERIMENTAL UNKNOWN STUFF BELOW===//
+    
 	/**
 	 * Create the frame.
 	 */
 	public void loginScreen() {
 		setTitle("StockItToMe");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
 		loginPane = new JPanel();
 		loginPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		//setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setBounds(100, 100, 450, 300);
 		setContentPane(loginPane);
 		
 		JLabel lblPassword = new JLabel("Password");
@@ -310,7 +270,6 @@ public class StockItToMe extends JFrame {
 		loginPane.setLayout(gl_contentPane);
 	}
     
-	
 	private ArrayList<Stock> populateMarket() throws IOException {
 		Scanner scnr = new Scanner("Market.txt");
 		ArrayList<Stock> market = new ArrayList<Stock>();
@@ -368,4 +327,5 @@ public class StockItToMe extends JFrame {
 		User user = new User(username);
 		return user;
 	}
+	
 }
