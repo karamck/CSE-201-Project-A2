@@ -25,7 +25,9 @@ class Tester {
      //Test checkPW
     	assertEquals(UserNameDB.checkUser("admin", "password"), true);
         assertTrue(UserNameDB.checkUser("admin", "password"));
-        assertTrue(UserNameDB.checkUser("Hundo", "P"));
+        assertFalse(UserNameDB.checkUser("Hundo", "P"));
+        assertTrue(UserNameDB.checkAdmin("admin"));
+        assertFalse(UserNameDB.checkAdmin("user"));
     }//end Database Tester
 	
 	/*
