@@ -6,6 +6,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import javax.swing.JTextPane;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -30,6 +35,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+
+//api imports
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Scanner;
+import yahoofinance.YahooFinance;
+
 
 public class TestyStuff extends JFrame {
 	private JPanel loginPane;
@@ -257,6 +269,25 @@ public class TestyStuff extends JFrame {
 		loginPane.setLayout(gl_contentPane);
 	}
     
+	public ArrayList<Stock> populateMarket() throws IOException {
+		File m = new File("Market.txt");
+		Scanner scnr = new Scanner(m);
+		ArrayList<Stock> market = new ArrayList<Stock>();
+		while(scnr.hasNextLine()) {
+			String index = scnr.nextLine();
+			yahoofinance.Stock s = YahooFinance.get(index);
+			Stock stock = new Stock();
+			stock.setIndex(index);
+			stock.setName(s.getName());
+			stock.setValue(s.getQuote().getPrice());
+			stock.setTrend(0.00);
+			stock.setNQE(s.getStats().getEarningsAnnouncement().toString());
+		}
+		scnr.close();
+		return market;
+	}
+	
+	
 	private User populateData(String username) {
 		User user = new User(username);
     	//populate data
