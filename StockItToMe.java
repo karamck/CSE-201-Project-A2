@@ -57,6 +57,7 @@ public class StockItToMe extends JFrame {
      * Launch the application.
      */
     public static void main(String[] args) {
+    	System.out.println("hello");
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
@@ -71,12 +72,13 @@ public class StockItToMe extends JFrame {
 
     /**
      * Create the frame.
+     * @throws IOException 
      */
-    public StockItToMe() {
+    public StockItToMe() throws IOException {
     	userScreen();
     }
     
-    public void userScreen() {
+    public void userScreen() throws IOException {
     	setTitle("Stock It To Me");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 969, 555);
@@ -92,16 +94,33 @@ public class StockItToMe extends JFrame {
         userPane.add(browser_panel);
         browser_panel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
         
-        JScrollPane mainScrollPane = new JScrollPane();
+        
+      //generate data
+        String subject[] = { "Math", " English", "SQL", "   java", "  c ", " c++ "," cobol ", "this is a test" };
+        //ArrayList<Stock> market = populateMarket();
+        //String subject[] = new String[market.size()];
+        //int counter = 0;
+        //for(Stock s : market) {
+        	//subject[counter] = s.getIndex();
+        	//counter++;
+        //}
+        
+        
+        //create list
+        JList<String> stockList = new JList<String>(subject);
+        stockList.setPreferredSize(new Dimension(750, 440));
+        stockList.setMaximumSize(new Dimension(950, 999999));
+       
+        
+        //create pane using list
+        JScrollPane mainScrollPane = new JScrollPane(stockList);
         mainScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         mainScrollPane.setPreferredSize(new Dimension(750, 450));
         mainScrollPane.setMaximumSize(new Dimension(950, 999999));
-        browser_panel.add(mainScrollPane);
         
-        JList stockList = new JList();
-        stockList.setPreferredSize(new Dimension(750, 440));
-        stockList.setMaximumSize(new Dimension(950, 999999));
-        mainScrollPane.add(stockList);
+        
+        //add scroll pane to the browser window
+        browser_panel.add(mainScrollPane);
         
         JPanel panel = new JPanel();
         userPane.add(panel, BorderLayout.NORTH);
