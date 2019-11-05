@@ -8,6 +8,7 @@ import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 
 import yahoofinance.YahooFinance;
+import java.math.BigDecimal;
 
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -34,6 +35,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -100,14 +102,14 @@ public class StockItToMe extends JFrame{
         
         
         //generate data
-        String indexes[] = { "GOOGL", "AAPL", "AMD", "CLDR", "TWTR", "TSLA","FB", "DIS" };
-        //ArrayList<Stock> market = populateMarket();
-        //String subject[] = new String[market.size()];
-        //int counter = 0;
-        //for(Stock s : market) {
-        	//subject[counter] = s.getIndex();
-        	//counter++;
-        //}
+        //String indexes[] = { "GOOGL", "AAPL", "AMD", "CLDR", "TWTR", "TSLA","FB", "DIS" };
+        ArrayList<Stock> market = populateMarket();
+        String indexes[] = new String[market.size()];
+        int counter = 0;
+        for(Stock s : market) {
+        	indexes[counter] = s.getIndex();
+        	counter++;
+        }
         
         
         //create list
@@ -277,7 +279,7 @@ public class StockItToMe extends JFrame{
   
 	
 	private ArrayList<Stock> populateMarket() throws IOException {
-		Scanner scnr = new Scanner("Market.txt");
+		Scanner scnr = new Scanner(new File("Market.txt"));
 		ArrayList<Stock> market = new ArrayList<Stock>();
 		while(scnr.hasNextLine()) {
 			String index = scnr.nextLine();
