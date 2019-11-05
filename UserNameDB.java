@@ -57,6 +57,34 @@ public class UserNameDB {
         return false;
     }
     
+    public static boolean checkAdmin(String userName) {
+        File unDB = new File("Usernames_Passwords.txt");
+        try {
+            Scanner dbReader = new Scanner(unDB);
+            
+            while(dbReader.hasNextLine()) {
+                String line = dbReader.nextLine();
+                String[] splitLine = line.split(" ");
+                String lineUserName = splitLine[0];
+                String lineAdmin = splitLine[2];
+                if (userName.equals(lineUserName)) {
+                    if (lineAdmin.equals("a")) {
+                        System.out.println("Is Admin");
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                }
+            }
+            dbReader.close();
+        } catch (FileNotFoundException exception) {
+            System.out.println("File not found");
+        }
+        System.out.println("User Not Found");
+        return false;
+    }
+    
     public static int addUser(String userName, String password) throws IOException {
     	/* return of 0 is successful
     	 * return of 1 is invalid username or password
@@ -70,7 +98,7 @@ public class UserNameDB {
         try {
             FileWriter fw = new FileWriter(unDB, true);
             BufferedWriter br = new BufferedWriter(fw);
-            br.write("\n" + userName + " " + password);
+            br.write("\n" + userName + " " + password + " x");
             br.close();
             fw.close();
             return 0;
