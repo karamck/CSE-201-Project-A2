@@ -1,5 +1,7 @@
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.math.BigDecimal;
+
 import org.junit.jupiter.api.Test;
 
 class StockTester {
@@ -22,7 +24,7 @@ class StockTester {
         assertEquals(stock.getIndex(), "index");
         
       //test value
-        stock.setValue(123.45);
+        stock.setValue(new BigDecimal("123.45"));
         assertEquals(stock.getValue(), 123.45);
         
       //test description
@@ -34,8 +36,8 @@ class StockTester {
         assertEquals(stock.getTrend(), 67.89);
         
         //test RQE
-        stock.setRQE(98.7);
-        assertEquals(stock.getRQE(), 98.7);
+        stock.setNQE("98.7");
+        assertEquals(stock.getNQE(), "98.7");
         //comment
     }
     

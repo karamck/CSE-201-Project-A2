@@ -21,6 +21,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.AbstractListModel;
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 
@@ -119,8 +120,7 @@ public class StockItToMe extends JFrame {
         mainScrollPane.setMaximumSize(new Dimension(950, 999999));
         
         
-        //add scroll pane to the browser window
-        browser_panel.add(mainScrollPane);
+        
         
         JPanel panel = new JPanel();
         userPane.add(panel, BorderLayout.NORTH);
