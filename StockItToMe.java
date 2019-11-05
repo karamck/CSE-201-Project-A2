@@ -223,16 +223,14 @@ public class StockItToMe extends JFrame{
   	      }
   	    });
         
-        JButton btnSignup = new JButton("Signup");
-        btnSignup.addActionListener(new ActionListener() {
+        JButton btnNewStock = new JButton("Add Request");
+        btnNewStock.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		System.out.println(user.getUserName());
-        		for(int i=0;i<user.getStock().length;i++) {
-        		System.out.println(user.getStock()[i]);
-        		}
+        		addRequest a = new addRequest();
+        		a.setVisible(true);
         	}
         });
-        panel_1.add(btnSignup);
+        panel_1.add(btnNewStock);
         
         
         //=====END TOP-RIGHT BUTTON GROUP=====//
