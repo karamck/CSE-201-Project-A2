@@ -7,6 +7,7 @@
 
 class Tester {
 	
+	
 	/*
 	 * 
 	 * start PopulateData
@@ -28,6 +29,7 @@ class Tester {
         assertFalse(UserNameDB.checkUser("Hundo", "P"));
         assertTrue(UserNameDB.checkAdmin("admin"));
         assertFalse(UserNameDB.checkAdmin("user"));
+        
     }//end Database Tester
 	
 	/*

@@ -30,6 +30,8 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,16 +43,16 @@ import javax.swing.JSeparator;
 import javax.swing.ListModel;
 import javax.swing.JScrollPane;
 
-public class StockItToMe extends JFrame {
+public class StockItToMe extends JFrame{
 	private JPanel loginPane;
 	private JPasswordField passwordField;
 	private JTextField textField;
     private JTable table;  
     private JPanel userPane;
     private login l;
+    private String currentUser = "me";
 	JList<String> list = new JList<String>();
 	
-
     private User user=new User();
 
     /**
@@ -144,6 +146,59 @@ public class StockItToMe extends JFrame {
   	      {
   	        l = new login();
   	        l.setVisible(true);
+  	        l.addWindowListener(new WindowListener() {
+
+		  	    @Override
+		  	  	public void windowActivated(WindowEvent arg0) {
+		  	  		// TODO Auto-generated method stub
+		  	  		
+		  	  	}
+		
+		  	  	@Override
+		  	  	public void windowClosed(WindowEvent j) {
+		  	  		// TODO Auto-generated method stub
+		  	  		currentUser = l.getUser();
+	  				System.out.println(currentUser);
+		  	  		//System.out.println("closed");
+		  	  	}
+		
+		  	  	@Override
+		  	  	public void windowClosing(WindowEvent e) {
+		  	  		ActionListener task = new ActionListener() {
+		  	  			public void actionPerformed(ActionEvent e)
+		  	  		      {
+		  	  				currentUser = l.getUser();
+		  	  				System.out.println(currentUser);
+		  	  				l.dispose();
+		  	  		      }
+		  	  			};
+		  	  	}
+		
+		  	  	@Override
+		  	  	public void windowDeactivated(WindowEvent e) {
+		  	  		// TODO Auto-generated method stub
+		  	  		//System.out.print("deactivated");
+		  	  	}
+		
+		  	  	@Override
+		  	  	public void windowDeiconified(WindowEvent e) {
+		  	  		// TODO Auto-generated method stub
+		  	  		
+		  	  	}
+		
+		  	  	@Override
+		  	  	public void windowIconified(WindowEvent e) {
+		  	  		// TODO Auto-generated method stub
+		  	  		System.out.print("minimized");
+		  	  	}
+		
+		  	  	@Override
+		  	  	public void windowOpened(WindowEvent e) {
+		  	  		// TODO Auto-generated method stub
+		  	  		System.out.print("opened");
+		  	  	}
+  	        	
+  	        });
   	      }
   	    });
         
@@ -363,4 +418,6 @@ public class StockItToMe extends JFrame {
 		User user = new User(username);
 		return user;
 	}
+
+
 }
