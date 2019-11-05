@@ -124,7 +124,7 @@ class Tester {
     	assertEquals(user.stockList.get(i).getName(), i+"");
     }
     
-}
+	}
 	/*
 	 * 
 	 * Stock list tester

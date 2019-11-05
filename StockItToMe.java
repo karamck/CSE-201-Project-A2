@@ -23,6 +23,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.AbstractListModel;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 
 import java.awt.Component;
@@ -80,6 +81,7 @@ public class StockItToMe extends JFrame {
     }
     
     public void userScreen() throws IOException {
+    	
     	setTitle("Stock It To Me");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 969, 555);
@@ -96,8 +98,8 @@ public class StockItToMe extends JFrame {
         browser_panel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
         
         
-      //generate data
-        String subject[] = { "Math", " English", "SQL", "   java", "  c ", " c++ "," cobol ", "this is a test" };
+        //generate data
+        String indexes[] = { "GOOGL", "AAPL", "AMD", "CLDR", "TWTR", "TSLA","FB", "DIS" };
         //ArrayList<Stock> market = populateMarket();
         //String subject[] = new String[market.size()];
         //int counter = 0;
@@ -108,7 +110,7 @@ public class StockItToMe extends JFrame {
         
         
         //create list
-        JList<String> stockList = new JList<String>(subject);
+        JList<String> stockList = new JList<String>(indexes);
         stockList.setPreferredSize(new Dimension(750, 440));
         stockList.setMaximumSize(new Dimension(950, 999999));
        
@@ -119,6 +121,7 @@ public class StockItToMe extends JFrame {
         mainScrollPane.setPreferredSize(new Dimension(750, 450));
         mainScrollPane.setMaximumSize(new Dimension(950, 999999));
         
+        browser_panel.add(mainScrollPane);
         
         
         
