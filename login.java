@@ -55,7 +55,6 @@ public class login extends JFrame {
 	 * Create the frame.
 	 */
 	public login() {
-
 		setTitle("StockItToMe");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
