@@ -7,7 +7,6 @@
 	<classpathentry kind="lib" path="jackson-core-2.9.0.jar"/>
 	<classpathentry kind="lib" path="jackson-databind-2.9.0.jar"/>
 	<classpathentry kind="lib" path="slf4j-api-1.7.25.jar"/>
-	<classpathentry kind="lib" path="StockItToMe$3.class"/>
 	<classpathentry kind="lib" path="YahooFinanceAPI-3.15.0-javadoc.jar"/>
 	<classpathentry kind="lib" path="YahooFinanceAPI-3.15.0-sources.jar"/>
 	<classpathentry kind="lib" path="YahooFinanceAPI-3.15.0.jar"/>
