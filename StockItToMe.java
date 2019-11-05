@@ -32,6 +32,8 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,23 +45,22 @@ import javax.swing.JSeparator;
 import javax.swing.ListModel;
 import javax.swing.JScrollPane;
 
-public class StockItToMe extends JFrame {
+public class StockItToMe extends JFrame{
 	private JPanel loginPane;
 	private JPasswordField passwordField;
 	private JTextField textField;
     private JTable table;  
     private JPanel userPane;
     private login l;
+    private String currentUser;
 	JList<String> list = new JList<String>();
 	
-
     private User user=new User();
 
     /**
      * Launch the application.
      */
     public static void main(String[] args) {
-    	System.out.println("hello");
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
@@ -166,6 +167,59 @@ public class StockItToMe extends JFrame {
   	      {
   	        l = new login();
   	        l.setVisible(true);
+  	        l.addWindowListener(new WindowListener() {
+
+		  	    @Override
+		  	  	public void windowActivated(WindowEvent arg0) {
+		  	  		// TODO Auto-generated method stub
+		  	  		
+		  	  	}
+		
+		  	  	@Override
+		  	  	public void windowClosed(WindowEvent j) {
+		  	  		// TODO Auto-generated method stub
+		  	  		currentUser = l.getUser();
+	  				System.out.println(currentUser);
+		  	  		//System.out.println("closed");
+		  	  	}
+		
+		  	  	@Override
+		  	  	public void windowClosing(WindowEvent e) {
+		  	  		ActionListener task = new ActionListener() {
+		  	  			public void actionPerformed(ActionEvent e)
+		  	  		      {
+		  	  				currentUser = l.getUser();
+		  	  				System.out.println(currentUser);
+		  	  				l.dispose();
+		  	  		      }
+		  	  			};
+		  	  	}
+		
+		  	  	@Override
+		  	  	public void windowDeactivated(WindowEvent e) {
+		  	  		// TODO Auto-generated method stub
+		  	  		//System.out.print("deactivated");
+		  	  	}
+		
+		  	  	@Override
+		  	  	public void windowDeiconified(WindowEvent e) {
+		  	  		// TODO Auto-generated method stub
+		  	  		
+		  	  	}
+		
+		  	  	@Override
+		  	  	public void windowIconified(WindowEvent e) {
+		  	  		// TODO Auto-generated method stub
+		  	  		System.out.print("minimized");
+		  	  	}
+		
+		  	  	@Override
+		  	  	public void windowOpened(WindowEvent e) {
+		  	  		// TODO Auto-generated method stub
+		  	  		System.out.print("opened");
+		  	  	}
+  	        	
+  	        });
   	      }
   	    });
         
@@ -222,111 +276,7 @@ public class StockItToMe extends JFrame {
 
         //=====END SIDEBAR=====//
 }
-    //===SCARY EXPERIMENTAL UNKNOWN STUFF BELOW===//
-	/**
-	 * Create the frame.
-	 */
-	public void loginScreen() {
-		setTitle("StockItToMe");
-		loginPane = new JPanel();
-		loginPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		//setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setBounds(100, 100, 450, 300);
-		setContentPane(loginPane);
-		
-		JLabel lblPassword = new JLabel("Password");
-		lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		
-		JLabel lblUsername = new JLabel("Username");
-		lblUsername.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		
-		JLabel ErrorMsg = new JLabel("");
-		ErrorMsg.setHorizontalAlignment(SwingConstants.CENTER);
-		ErrorMsg.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		ErrorMsg.setForeground(Color.RED);
-		
-		
-		passwordField = new JPasswordField();
-		passwordField.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		
-	
-		textField = new JTextField();
-		textField.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		textField.setColumns(10);		
-		
-		JButton btnLogin = new JButton("Login");
-		btnLogin.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		
-		btnLogin.addActionListener(new ActionListener()
-	    {
-	      public void actionPerformed(ActionEvent e)
-	      {
-	    	  String usName=textField.getText();
-	        // print login attempt
-	        //System.out.print("Username: " + textField.getText() + "\nPassword: " + passwordField.getText());
-	    	  if (UserNameDB.checkUser(usName, passwordField.getText())) {
-	    		  System.out.println(usName);
-	    		  user = populateData(usName);
-	    		  setBounds(100, 100, 723, 610);
-	              list=new JList(user.getStock());
-	              list.repaint();
-	    		  setContentPane(userPane);
-	    		  userPane.repaint();
-//	    		  userScreen();
-//	    		  System.exit(0);
-	    	  }
-	    	  else {
-	    		  ErrorMsg.setText("Incorrect Username or Password");
-	    		  //System.out.println("nope");
-	    	  }
-	    		  
-	      }
-	    });
-		
-
-		GroupLayout gl_contentPane = new GroupLayout(loginPane);
-		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addContainerGap()
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(lblUsername, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
-									.addGap(40))
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(lblPassword, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
-									.addGap(20)))
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(textField, 258, 258, 258)
-								.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, 256, GroupLayout.PREFERRED_SIZE)))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(132)
-							.addComponent(btnLogin, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE))
-						.addComponent(ErrorMsg, GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE))
-					.addContainerGap())
-		);
-		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(44)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblUsername)
-						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblPassword, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)
-						.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addComponent(ErrorMsg, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(btnLogin, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-					.addGap(26))
-		);
-		loginPane.setLayout(gl_contentPane);
-	}
-    
+  
 	
 	private ArrayList<Stock> populateMarket() throws IOException {
 		Scanner scnr = new Scanner("Market.txt");
@@ -385,4 +335,6 @@ public class StockItToMe extends JFrame {
 		User user = new User(username);
 		return user;
 	}
+
+
 }
