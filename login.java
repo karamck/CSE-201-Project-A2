@@ -17,6 +17,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.Frame;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -56,6 +57,7 @@ public class login extends JFrame {
 	 */
 	public login() {
 		setTitle("StockItToMe");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(addRequest.class.getResource("AppsyntheIcon.png")));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
