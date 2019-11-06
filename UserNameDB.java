@@ -89,10 +89,12 @@ public class UserNameDB {
     	/* return of 0 is successful
     	 * return of 1 is invalid username or password
     	 * return of 2 is username already taken
+    	 * return of 4 if the username contains illegal characters
     	 * default return is 3
     	 */
     	password = encrypt(password);
-    	if (!validate(userName)||!validate(password)) return 1;
+    	if (!validatePassword(password)) return 1;
+    	if (!validateName(userName)) return 4;
     	if (checkUsername(userName)) return 2;
         File unDB = new File("Usernames_Passwords.txt");
         try {
@@ -109,7 +111,12 @@ public class UserNameDB {
         return 3;
     }
     
-    private static boolean validate(String string) {
+    private static boolean validateName(String string) {
+    	return string.matches("[A-z0-9]+");
+    	//if (string.contains(" ")) return false;
+    	//return true;
+    }
+    private static boolean validatePassword(String string) {
     	if (string.contains(" ")) return false;
     	return true;
     }

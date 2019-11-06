@@ -132,6 +132,10 @@ public class login extends JFrame {
 		    		  Msg.setForeground(Color.RED);
 		    		  Msg.setText("Username taken");
 		    	  }
+		    	  else if (temp == 4) {
+		    		  Msg.setForeground(Color.RED);
+		    		  Msg.setText("Username must only contain letters and numbers");
+		    	  }
 		    	  else {
 		    		  Msg.setForeground(Color.RED);
 		    		  Msg.setText("Invaild. No spaces in username or password.");
