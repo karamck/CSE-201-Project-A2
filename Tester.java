@@ -1,6 +1,7 @@
 import static org.junit.jupiter.api.Assertions.*;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 
@@ -90,6 +91,12 @@ class StockClassTester{
 	   	Stock stock = new Stock();
 	   	stock.setTrend(22.2);
 	   	assertEquals(stock.getTrend(), 22.2);
+	}
+	
+	@Test
+	void testStocktoString() {
+		Stock stock = new Stock("Name", "Description", "Index", new BigDecimal(3), 0.5, "00/00/0000");
+		assertEquals(stock.toString(), "Index (Name) | Value: 3 | Trend: 0.5 | nQE: 00/00/0000");
 	}
 }//end Stock Tester   
 

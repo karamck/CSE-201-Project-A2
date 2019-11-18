@@ -23,6 +23,9 @@ public class Stock {
 	public Stock(String name) {
 		this.name=name;
 	}
+	public String toString() {
+		return String.format("%s (%s)  | Value: %s | Trend: %f | nQE: %s",index, name, value.toPlainString(), trend, NQE );
+	}
 	public String getName() {
 		return name;
 	}

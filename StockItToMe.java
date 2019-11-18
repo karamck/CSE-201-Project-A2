@@ -109,7 +109,7 @@ public class StockItToMe extends JFrame{
         String indexes[] = new String[market.size()];
         int counter = 0;
         for(Stock s : market) {
-        	indexes[counter] = s.getIndex();
+        	indexes[counter] = s.toString();
         	counter++;
         }
         
@@ -291,7 +291,7 @@ public class StockItToMe extends JFrame{
 			stock.setName(s.getName());
 			stock.setValue(s.getQuote().getPrice());
 			stock.setTrend(0.00);
-			stock.setNQE(s.getStats().getEarningsAnnouncement().toString());
+			stock.setNQE("" + s.getStats().getEarningsAnnouncement().getTime());
 			market.add(stock);
 		}
 		scnr.close();
