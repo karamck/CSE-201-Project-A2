@@ -56,27 +56,33 @@ public class AddRequestDB {
         String[] arrayOfStrings = list.toArray(new String[list.size()]);
         return arrayOfStrings;
     }
-    
-    //this is in progress
+
+    // this is in progress
     public static boolean removeRequest(String symbol) throws IOException {
         File unDB = new File("Add_Requests.txt");
         try {
+            int count = 0;
             Scanner dbReader = new Scanner(unDB);
-            FileWriter fw = new FileWriter(unDB, true);
-            //BufferedWriter br = new BufferedWriter(fw);
+            String fileStuff = "";
             while (dbReader.hasNextLine()) {
                 String line = dbReader.nextLine();
                 String[] splitLine = line.split(" ");
                 if (splitLine[0].equals(symbol)) {
+                } else {
+                    if (count != 0) {
+                        fileStuff += "\n";
+                    }
+                    fileStuff += line;
                 }
-                else {
-                    fw.write(line);
-                }
+                count++;
             }
-            
-            fw.close();
-            //br.close();
             dbReader.close();
+            FileWriter fw = new FileWriter("Add_Requests.txt");
+            // BufferedWriter br = new BufferedWriter(fw);
+            // br.write(fileStuff);
+            fw.write(fileStuff);
+            fw.close();
+            // br.close();
             return true;
         } catch (FileNotFoundException exception) {
             System.out.println("File not found");
