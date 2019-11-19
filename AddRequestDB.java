@@ -34,18 +34,19 @@ public class AddRequestDB {
 
     public static String[] getRequests() throws IOException {
         ArrayList<String> list = new ArrayList<String>();
-        int count = 0;
         File unDB = new File("Add_Requests.txt");
         try {
             Scanner dbReader = new Scanner(unDB);
 
             while (dbReader.hasNextLine()) {
-                String line2 = dbReader.nextLine();
-                String line = count + " ";
-                line += line2;
-                line += "\n";
-                list.add(line);
-                // String[] splitLine = line.split(" ");
+                String line = dbReader.nextLine();
+                String line2 = "";
+                String[] splitLine = line.split(" ");
+                line2 += "Symbol:  " + splitLine[0] + "\n";
+                line2 += " Name:  " + splitLine[1] + "\n";
+                line2 += " Currency:  " + splitLine[2] + "\n";
+                line2 += " Exhange:  " + splitLine[3] + "\n\n\n";
+                list.add(line2);
 
             }
             dbReader.close();
