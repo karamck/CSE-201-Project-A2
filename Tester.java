@@ -3,6 +3,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
+
 import org.junit.jupiter.api.Test;
 
 // start Database Tester
@@ -97,6 +99,17 @@ class StockClassTester{
 	void testStocktoString() {
 		Stock stock = new Stock("Name", "Description", "Index", new BigDecimal(3), 0.5, "00/00/0000");
 		assertEquals(stock.toString(), "Index (Name) | Value: 3 | Trend: 0.5 | nQE: 00/00/0000");
+	}
+	@Test
+	void testStockCompareTo() {
+		Stock stockA = new Stock("1","","AA", new BigDecimal(0),0,"");
+		Stock stockB = new Stock("3","","ABC", new BigDecimal(0),0,"");
+		Stock stockC = new Stock("2","","AAA", new BigDecimal(0),0,"");
+		Stock stockF = new Stock("4","","ABC", new BigDecimal(0),0,"");
+		
+		assertEquals(stockB.compareTo(stockF), 0);
+		assertTrue(stockA.compareTo(stockC) > 0);
+		assertTrue(stockB.compareTo(stockC) < 0);
 	}
 }//end Stock Tester   
 
