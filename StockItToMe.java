@@ -56,7 +56,7 @@ public class StockItToMe extends JFrame{
     private JPanel userPane;
     private login l;
     private String currentUser;
-	JList<String> list = new JList<String>();
+	JList<String> list = new JList<String>(AddRequestDB.getRequests());
 	
     private User user=new User();
 
