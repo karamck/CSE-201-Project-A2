@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -52,7 +53,7 @@ public class addRequest extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 600, 326);
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBorder(new EmptyBorder(6, 6, 6, 6));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
@@ -61,6 +62,7 @@ public class addRequest extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
+		
 		contentPane.add(btnNewButton, BorderLayout.SOUTH);
 		
 		JPanel panel = new JPanel();
@@ -147,6 +149,38 @@ public class addRequest extends JFrame {
 		gbc_textField_3.gridy = 4;
 		panel.add(textField_3, gbc_textField_3);
 		textField_3.setColumns(10);
+		
+		//Message for not filling out fields
+		JLabel Msg = new JLabel("");
+        Msg.setHorizontalAlignment(SwingConstants.CENTER);
+        Msg.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        Msg.setForeground(Color.RED);
+        
+        GridBagConstraints gbc_message = new GridBagConstraints();
+        gbc_message.insets = new Insets(0, 0, 5, 0);
+        gbc_message.fill = GridBagConstraints.HORIZONTAL;
+        gbc_message.gridx = 0;
+        gbc_message.gridy = 5;
+        panel.add(Msg, gbc_message);
+        
+        //contentPane.add(Msg);
+        btnNewButton.addActionListener(new ActionListener()
+        {
+          public void actionPerformed(ActionEvent e)
+          {
+            // print login attempt
+            //System.out.print("Username: " + textField.getText() + "\nPassword: " + passwordField.getText());
+              if (textField_1.getText().length() == 0 || textField_2.getText().length() == 0 || textField_3.getText().length() == 0) {
+                  Msg.setForeground(Color.RED);
+                  Msg.setText("Please fill out all fields");
+              }
+              else {
+                  System.out.println("success button");
+                  dispose();
+              }
+                  
+          }
+        });
 	}
 
 }
