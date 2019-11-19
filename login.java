@@ -121,7 +121,6 @@ public class login extends JFrame {
 	      public void actionPerformed(ActionEvent e)
 	      {
 	        // print login attempt
-	        //System.out.print("Username: " + textField.getText() + "\nPassword: " + passwordField.getText());
 	    	  int temp;
     		  Msg.setText("");
 			try {

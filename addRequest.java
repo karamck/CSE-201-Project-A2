@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -163,20 +164,31 @@ public class addRequest extends JFrame {
         gbc_message.gridy = 5;
         panel.add(Msg, gbc_message);
         
-        //contentPane.add(Msg);
         btnNewButton.addActionListener(new ActionListener()
         {
           public void actionPerformed(ActionEvent e)
           {
-            // print login attempt
-            //System.out.print("Username: " + textField.getText() + "\nPassword: " + passwordField.getText());
-              if (textField_1.getText().length() == 0 || textField_2.getText().length() == 0 || textField_3.getText().length() == 0) {
+              boolean success = false;
+              if (textField.getText().length() == 0 || textField_1.getText().length() == 0 || textField_2.getText().length() == 0 || textField_3.getText().length() == 0) {
                   Msg.setForeground(Color.RED);
                   Msg.setText("Please fill out all fields");
               }
               else {
-                  System.out.println("success button");
-                  dispose();
+                  try {
+                    success = AddRequestDB.addStock(textField.getText(), textField_1.getText(), textField_2.getText(), textField_3.getText());
+                } catch (IOException e1) {
+                    System.out.println("Issue with add stock");
+                    Msg.setForeground(Color.RED);
+                    Msg.setText("Cannot add, file not found");
+                }
+                  if (success) {
+                      System.out.println("Successful add");
+                      dispose();
+                  }
+                  else {
+                      Msg.setForeground(Color.RED);
+                      Msg.setText("Stock Could Not Be Added"); 
+                  }
               }
                   
           }
