@@ -7,6 +7,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 
+import javax.swing.event.*;
+
 import yahoofinance.YahooFinance;
 import java.math.BigDecimal;
 
@@ -34,12 +36,15 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 import javax.swing.JButton;
@@ -119,6 +124,30 @@ public class StockItToMe extends JFrame{
         stockList.setPreferredSize(new Dimension(750, 440));
         stockList.setMaximumSize(new Dimension(950, 999999));
        
+        stockList.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent me) {
+            	JList list = (JList)me.getSource();
+            	if (me.getClickCount() == 2) {
+
+                    // Double-click detected
+                    int index = list.locationToIndex(me.getPoint());
+                    int counter = 0;
+                    for(Stock s : market) {
+                    	if(counter == index) {
+                    		user.addStock(s);
+                    		String[] theirs = user.getStock();
+                    		System.out.println(Arrays.toString(theirs));
+                    	}
+                    	counter++;
+                    }
+                    
+                } else if (me.getClickCount() == 3) {
+
+                    // Triple-click detected
+                    int index = list.locationToIndex(me.getPoint());
+                }
+            }
+         });
         
         //create pane using list
         JScrollPane mainScrollPane = new JScrollPane(stockList);
