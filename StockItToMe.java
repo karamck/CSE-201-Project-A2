@@ -300,7 +300,7 @@ public class StockItToMe extends JFrame{
 	private ArrayList<Stock> populatePortfolio(String username) throws IOException {
 		ArrayList<Stock> portfolio = new ArrayList<Stock>();
 		String file = username + ".txt";
-		Scanner scnr = new Scanner(file);
+		Scanner scnr = new Scanner(new File(file));
     	//populate data
 		while(scnr.hasNextLine()) {
 			String index = scnr.nextLine();
