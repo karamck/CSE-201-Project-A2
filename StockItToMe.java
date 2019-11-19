@@ -31,6 +31,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -86,6 +87,7 @@ public class StockItToMe extends JFrame{
     public void userScreen() throws IOException {
     	
     	setTitle("Stock It To Me");
+    	setIconImage(Toolkit.getDefaultToolkit().getImage(addRequest.class.getResource("AppsyntheIcon.png")));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 969, 555);
         userPane = new JPanel();
@@ -107,7 +109,7 @@ public class StockItToMe extends JFrame{
         String indexes[] = new String[market.size()];
         int counter = 0;
         for(Stock s : market) {
-        	indexes[counter] = s.getIndex();
+        	indexes[counter] = s.toString();
         	counter++;
         }
         
@@ -289,7 +291,7 @@ public class StockItToMe extends JFrame{
 			stock.setName(s.getName());
 			stock.setValue(s.getQuote().getPrice());
 			stock.setTrend(0.00);
-			stock.setNQE(s.getStats().getEarningsAnnouncement().toString());
+			stock.setNQE("" + s.getStats().getEarningsAnnouncement().getTime());
 			market.add(stock);
 		}
 		scnr.close();
