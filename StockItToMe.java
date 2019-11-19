@@ -45,6 +45,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Scanner;
 
 import javax.swing.JButton;
@@ -63,7 +64,7 @@ public class StockItToMe extends JFrame{
     private String currentUser;
 	JList<String> list = new JList<String>();
 	
-    private User user=new User();
+    private User user = new User();
 
     /**
      * Launch the application.
@@ -111,6 +112,7 @@ public class StockItToMe extends JFrame{
         //generate data
         //String indexes[] = { "GOOGL", "AAPL", "AMD", "CLDR", "TWTR", "TSLA","FB", "DIS" };
         ArrayList<Stock> market = populateMarket();
+        Collections.sort(market);
         String indexes[] = new String[market.size()];
         int counter = 0;
         for(Stock s : market) {
