@@ -282,25 +282,29 @@ public class StockItToMe extends JFrame{
         */
         JPanel panel_3 = new JPanel();
         sidebar.add(panel_3);
-        panel_3.setMaximumSize(new Dimension(250, 99999));
+        panel_3.setMaximumSize(new Dimension(300, 99999));
         FlowLayout flowLayout = (FlowLayout) panel_3.getLayout();
         flowLayout.setVgap(15);
         flowLayout.setHgap(15);
         flowLayout.setAlignment(FlowLayout.LEFT);
         
         JScrollPane scrollPane_1 = new JScrollPane();
-        scrollPane_1.setPreferredSize(new Dimension(150, 450));
-        scrollPane_1.setMaximumSize(new Dimension(250, 999999));
+        scrollPane_1.setPreferredSize(new Dimension(300, 450));
+        scrollPane_1.setMaximumSize(new Dimension(300, 999999));
         panel_3.add(scrollPane_1);
         scrollPane_1.setAlignmentY(Component.TOP_ALIGNMENT);
         scrollPane_1.setAlignmentX(Component.LEFT_ALIGNMENT);
         scrollPane_1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        
+        //WE SHOULD CHANGE CONTENTS OF LIST BASED ON IF USER OR ADMIN IS LOGGED IN
+        
+        JList<String> rlist = new JList<String>(AddRequestDB.getRequests());
 //        scrollPane_1.setColumnHeaderView(lblStockBowse_1);
         
-    	list.setPreferredSize(new Dimension(150, 440));
-    	list.setMaximumSize(new Dimension(75, 590));
-    	list.setBounds(48, 39, 1, 1);
-    	scrollPane_1.setViewportView(list);
+    	rlist.setPreferredSize(new Dimension(150, 440));
+    	rlist.setMaximumSize(new Dimension(75, 590));
+    	rlist.setBounds(48, 39, 1, 1);
+    	scrollPane_1.setViewportView(rlist);
     	
         table = new JTable();
         table.setPreferredScrollableViewportSize(new Dimension(150, 400));
