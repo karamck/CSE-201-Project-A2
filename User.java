@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -89,17 +90,28 @@ public class User implements Account {
     	return stockString;
     }
     
-    public void addStock(Stock stock) {
+    public void addStock(Stock stock) throws IOException {
     	stockList.add(stock);
+    	addStockToPortfolio(stock.getIndex(), this.userName);
     }
     public void removeStock(Stock stock) {
-    	int counter = 0;
     	for(Stock s : stockList) {
-    		if(s.equals(stock))
+    		if(s.equals(stock)) {
+    			stockList.remove(s);
     			break;
-    		counter++;
+    		}
     	}
-    	stockList.remove(counter);
+    	
+
     }
+    
+    private boolean addStockToPortfolio(String index, String username) throws IOException {
+		String file = username + ".txt";
+		FileWriter filewriter = new FileWriter(file,true);
+		filewriter.write(System.getProperty( "line.separator" ));
+		filewriter.write(index);
+		filewriter.close();
+		return true;
+	}
     
 }
