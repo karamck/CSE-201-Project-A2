@@ -227,7 +227,12 @@ public class StockItToMe extends JFrame{
 		  	  		currentUser = l.getUser();
 	  				System.out.println(currentUser.getUserName());
 		  	  		//System.out.println("closed");
-	  				fillListModel(currentUser, portfolio);
+	  				try {
+						fillListModel(currentUser, portfolio);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 	  				
 		  	  	}
 		
@@ -396,11 +401,20 @@ public class StockItToMe extends JFrame{
 	}
 	
 	
-	public void fillListModel(User user, DefaultListModel<String> portfolio){
-		portfolio.clear();
-		String[] stocks = user.getStock();
-		for(String s : stocks) {
-			portfolio.addElement(s);
+	public void fillListModel(User user, DefaultListModel<String> portfolio) throws IOException{
+		if (UserNameDB.checkAdmin(user.getUserName())) {
+			portfolio.clear();
+			String[] requests = AddRequestDB.getRequests();
+			for(String s : requests) {
+				portfolio.addElement(s);
+			}
+		}
+		else {
+			portfolio.clear();
+			String[] stocks = user.getStock();
+			for(String s : stocks) {
+				portfolio.addElement(s);
+			}
 		}
 		
 	}
