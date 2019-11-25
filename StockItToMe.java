@@ -140,9 +140,15 @@ public class StockItToMe extends JFrame{
                     int counter = 0;
                     for(Stock s : market) {
                     	if(counter == index) {
-                    		user.addStock(s);
+                    		try {
+								currentUser.addStock(s);
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
                     		String[] theirs = user.getStock();
                     		System.out.println(Arrays.toString(theirs));
+                    		fillListModel(currentUser, portfolio);
                     	}
                     	counter++;
                     }
@@ -314,12 +320,14 @@ public class StockItToMe extends JFrame{
 
                     // Double-click detected
                     int index = list.locationToIndex(me.getPoint());
+                    System.out.println(index);
                     int counter = 0;
                     for(Stock s : market) {
                     	if(counter == index) {
-                    		user.removeStock(s);
-                    		String[] theirs = user.getStock();
+                    		currentUser.removeStock(s);
+                    		String[] theirs = currentUser.getStock();
                     		System.out.println(Arrays.toString(theirs));
+                    		fillListModel(currentUser, portfolio);
                     	}
                     	counter++;
                     }
@@ -386,13 +394,7 @@ public class StockItToMe extends JFrame{
 		filewriter.close();
 		return true;
 	}
-	private boolean addStockToPortfolio(String index, String username) throws IOException {
-		String file = username + ".txt";
-		FileWriter filewriter = new FileWriter(file,true);
-		filewriter.write(index);
-		filewriter.close();
-		return true;
-	}
+	
 	
 	public void fillListModel(User user, DefaultListModel<String> portfolio){
 		portfolio.clear();
