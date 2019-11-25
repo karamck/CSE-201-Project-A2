@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -6,17 +7,33 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 
+import javax.swing.event.*;
+
 import yahoofinance.YahooFinance;
+import java.math.BigDecimal;
+
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JTextField;
+import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.AbstractListModel;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
+import javax.swing.GroupLayout;
+
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,10 +46,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Scanner;
 
 import javax.swing.JButton;
+import javax.swing.JList;
+import javax.swing.JSeparator;
+import javax.swing.ListModel;
+import javax.swing.JScrollPane;
 
 public class StockItToMe extends JFrame{
 	private JPanel loginPane;
@@ -41,10 +61,11 @@ public class StockItToMe extends JFrame{
     private JTable table;  
     private JPanel userPane;
     private login l;
-    private User currentUser;
+    private User currentUser = new User();
+    public JScrollPane scrollPane_1;
 	JList<String> list = new JList<String>();
 	
-    private User user = new User();
+    private User user=new User();
 
     /**
      * Launch the application.
@@ -92,7 +113,6 @@ public class StockItToMe extends JFrame{
         //generate data
         //String indexes[] = { "GOOGL", "AAPL", "AMD", "CLDR", "TWTR", "TSLA","FB", "DIS" };
         ArrayList<Stock> market = populateMarket();
-        Collections.sort(market);
         String indexes[] = new String[market.size()];
         int counter = 0;
         for(Stock s : market) {
@@ -207,6 +227,7 @@ public class StockItToMe extends JFrame{
 		  	  				currentUser = l.getUser();
 		  	  				System.out.println(currentUser);
 		  	  				l.dispose();
+		  	  				SwingUtilities.updateComponentTreeUI(scrollPane_1);
 		  	  		      }
 		  	  			};
 		  	  	}
@@ -234,6 +255,7 @@ public class StockItToMe extends JFrame{
 		  	  		// TODO Auto-generated method stub
 		  	  		System.out.print("opened");
 		  	  	}
+  	        	
   	        });
   	      }
   	    });
@@ -274,15 +296,9 @@ public class StockItToMe extends JFrame{
         
         //updates users stocks
         
-        String portfolioData[] = new String[user.stockList.size()];
-        System.out.println(user.stockList.size());
-        int counter2 = 0;
-        for(Stock s : user.stockList) {
-        	portfolioData[counter2] = s.getIndex() + s.getValue().toString();
-        	counter2++;
-        }
         
-        JList<String> portfolioList = new JList<String>(portfolioData);
+        
+        JList<String> portfolioList = new JList<String>(currentUser.getStock());
         portfolioList.setPreferredSize(new Dimension(300, 450));
         portfolioList.setMaximumSize(new Dimension(300, 999999));
        
@@ -312,7 +328,7 @@ public class StockItToMe extends JFrame{
             }
          });
         
-        JScrollPane scrollPane_1 = new JScrollPane(portfolioList);
+        scrollPane_1 = new JScrollPane(portfolioList);
         scrollPane_1.setPreferredSize(new Dimension(300, 450));
         scrollPane_1.setMaximumSize(new Dimension(300, 999999));
         panel_3.add(scrollPane_1);
@@ -357,25 +373,7 @@ public class StockItToMe extends JFrame{
 	}
 	
 	
-	private ArrayList<Stock> populatePortfolio(String username) throws IOException {
-		ArrayList<Stock> portfolio = new ArrayList<Stock>();
-		String file = username + ".txt";
-		Scanner scnr = new Scanner(new File(file));
-    	//populate data
-		while(scnr.hasNextLine()) {
-			String index = scnr.nextLine();
-			yahoofinance.Stock s = YahooFinance.get(index);
-			Stock stock = new Stock();
-			stock.setIndex(index);
-			stock.setName(s.getName());
-			stock.setValue(s.getQuote().getPrice());
-			stock.setTrend(0.00);
-			stock.setNQE(s.getStats().getEarningsAnnouncement().toString());
-			portfolio.add(stock);
-		}
-		scnr.close();
-		return portfolio;
-	}
+	
 	
 	private boolean addStockToMarket(String index) throws IOException {
 		FileWriter filewriter = new FileWriter("Market.txt",true);
@@ -391,10 +389,6 @@ public class StockItToMe extends JFrame{
 		return true;
 	}
 	
-	private User populateData(String username) {
-		User user = new User(username);
-		return user;
-	}
 
 
 }
