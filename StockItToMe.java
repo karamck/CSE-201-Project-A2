@@ -140,7 +140,8 @@ public class StockItToMe extends JFrame{
                     	}
                     	counter++;
                     }
-                    
+                    userPane.revalidate();
+                    userPane.repaint();
                 } else if (me.getClickCount() == 3) {
 
                     // Triple-click detected
@@ -288,7 +289,49 @@ public class StockItToMe extends JFrame{
         flowLayout.setHgap(15);
         flowLayout.setAlignment(FlowLayout.LEFT);
         
-        JScrollPane scrollPane_1 = new JScrollPane();
+        
+        
+        //updates users stocks
+        
+        String portfolioData[] = new String[user.stockList.size()];
+        System.out.println(user.stockList.size());
+        int counter2 = 0;
+        for(Stock s : user.stockList) {
+        	portfolioData[counter2] = s.getIndex() + s.getValue().toString();
+        	counter2++;
+        }
+        
+        JList<String> portfolioList = new JList<String>(portfolioData);
+        portfolioList.setPreferredSize(new Dimension(300, 450));
+        portfolioList.setMaximumSize(new Dimension(300, 999999));
+       
+        portfolioList.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent me) {
+            	JList list = (JList)me.getSource();
+            	if (me.getClickCount() == 2) {
+
+                    // Double-click detected
+                    int index = list.locationToIndex(me.getPoint());
+                    int counter = 0;
+                    for(Stock s : market) {
+                    	if(counter == index) {
+                    		user.removeStock(s);
+                    		String[] theirs = user.getStock();
+                    		System.out.println(Arrays.toString(theirs));
+                    	}
+                    	counter++;
+                    }
+                    panel_3.revalidate();
+                    panel_3.repaint();
+                } else if (me.getClickCount() == 3) {
+
+                    // Triple-click detected
+                    int index = list.locationToIndex(me.getPoint());
+                }
+            }
+         });
+        
+        JScrollPane scrollPane_1 = new JScrollPane(portfolioList);
         scrollPane_1.setPreferredSize(new Dimension(300, 450));
         scrollPane_1.setMaximumSize(new Dimension(300, 999999));
         panel_3.add(scrollPane_1);
@@ -298,18 +341,19 @@ public class StockItToMe extends JFrame{
         
         //WE SHOULD CHANGE CONTENTS OF LIST BASED ON IF USER OR ADMIN IS LOGGED IN
         
-        JList<String> rlist = new JList<String>(AddRequestDB.getRequests());
+        //JList<String> rlist = new JList<String>(AddRequestDB.getRequests());
 //        scrollPane_1.setColumnHeaderView(lblStockBowse_1);
         
-    	rlist.setPreferredSize(new Dimension(150, 440));
-    	rlist.setMaximumSize(new Dimension(75, 590));
-    	rlist.setBounds(48, 39, 1, 1);
-    	scrollPane_1.setViewportView(rlist);
+    	//rlist.setPreferredSize(new Dimension(150, 440));
+    	//rlist.setMaximumSize(new Dimension(75, 590));
+    	//rlist.setBounds(48, 39, 1, 1);
+    	//scrollPane_1.setViewportView(rlist);
     	
         table = new JTable();
         table.setPreferredScrollableViewportSize(new Dimension(150, 400));
 
         //=====END SIDEBAR=====//
+
 }
   
 	
