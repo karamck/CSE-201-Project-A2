@@ -1,5 +1,4 @@
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -7,32 +6,17 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 
-import javax.swing.event.*;
-
 import yahoofinance.YahooFinance;
-import java.math.BigDecimal;
-
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.SwingConstants;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JTextField;
-import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.AbstractListModel;
 import javax.swing.BoxLayout;
-import javax.swing.DefaultListModel;
-import javax.swing.GroupLayout;
-
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -45,13 +29,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Scanner;
 
 import javax.swing.JButton;
-import javax.swing.JList;
-import javax.swing.JSeparator;
-import javax.swing.ListModel;
-import javax.swing.JScrollPane;
 
 public class StockItToMe extends JFrame{
 	private JPanel loginPane;
@@ -63,7 +44,7 @@ public class StockItToMe extends JFrame{
     private String currentUser;
 	JList<String> list = new JList<String>();
 	
-    private User user=new User();
+    private User user = new User();
 
     /**
      * Launch the application.
@@ -111,6 +92,7 @@ public class StockItToMe extends JFrame{
         //generate data
         //String indexes[] = { "GOOGL", "AAPL", "AMD", "CLDR", "TWTR", "TSLA","FB", "DIS" };
         ArrayList<Stock> market = populateMarket();
+        Collections.sort(market);
         String indexes[] = new String[market.size()];
         int counter = 0;
         for(Stock s : market) {
@@ -252,7 +234,6 @@ public class StockItToMe extends JFrame{
 		  	  		// TODO Auto-generated method stub
 		  	  		System.out.print("opened");
 		  	  	}
-  	        	
   	        });
   	      }
   	    });

@@ -1,6 +1,6 @@
 import java.math.BigDecimal;
 
-public class Stock {
+public class Stock implements Comparable<Stock>{
 	private String name;
 	private String description;
 	private String index;
@@ -61,5 +61,11 @@ public class Stock {
 	}
 	public void setNQE(String nQE) {
 		this.NQE = nQE;
+	}
+	@Override
+	public int compareTo(Stock comparedStock) {
+		// TODO Auto-generated method stub
+		
+		return index.compareTo(comparedStock.getIndex());
 	}
 }
