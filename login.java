@@ -94,7 +94,12 @@ public class login extends JFrame {
 	        // print login attempt
 	        //System.out.print("Username: " + textField.getText() + "\nPassword: " + passwordField.getText());
 	    	  if (UserNameDB.checkUser(textField.getText(), passwordField.getText())) {
-	    		  user = new User(textField.getText());
+	    		  try {
+					user = new User(textField.getText());
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 	    		  System.out.println("Login Success");
 	    		  dispose();
 	    		  //closeFrame();
