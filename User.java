@@ -63,5 +63,14 @@ public class User implements Account {
     public void addStock(Stock stock) {
     	stockList.add(stock);
     }
+    public void removeStock(Stock stock) {
+    	int counter = 0;
+    	for(Stock s : stockList) {
+    		if(s.equals(stock))
+    			break;
+    		counter++;
+    	}
+    	stockList.remove(counter);
+    }
     
 }
