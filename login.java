@@ -30,7 +30,7 @@ public class login extends JFrame {
 	private JPasswordField passwordField;
 	private JTextField textField;
 	private String un;
-	private String user;
+	private User user;
 
 	/**
 	 * Launch the application.
@@ -48,7 +48,7 @@ public class login extends JFrame {
 		});
 	}
 	
-	public String getUser() {
+	public User getUser() {
 		return user;
 	}
 
@@ -94,7 +94,7 @@ public class login extends JFrame {
 	        // print login attempt
 	        //System.out.print("Username: " + textField.getText() + "\nPassword: " + passwordField.getText());
 	    	  if (UserNameDB.checkUser(textField.getText(), passwordField.getText())) {
-	    		  user = textField.getText();
+	    		  user = new User(textField.getText());
 	    		  System.out.println("Login Success");
 	    		  dispose();
 	    		  //closeFrame();

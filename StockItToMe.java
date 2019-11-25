@@ -41,7 +41,7 @@ public class StockItToMe extends JFrame{
     private JTable table;  
     private JPanel userPane;
     private login l;
-    private String currentUser;
+    private User currentUser;
 	JList<String> list = new JList<String>();
 	
     private User user = new User();
