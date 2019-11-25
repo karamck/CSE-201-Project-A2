@@ -103,6 +103,8 @@ public class UserNameDB {
             br.write("\n" + userName + " " + password + " x");
             br.close();
             fw.close();
+           File userFile =  new File(userName + ".txt");
+           userFile.createNewFile();
             return 0;
         } catch (FileNotFoundException exception) {
             System.out.println("File not found");
