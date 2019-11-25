@@ -62,7 +62,7 @@ public class StockItToMe extends JFrame{
     private JPanel userPane;
     private login l;
     private User currentUser = new User();
-    public JScrollPane scrollPane_1;
+
 	JList<String> list = new JList<String>();
 	
     private User user=new User();
@@ -101,7 +101,11 @@ public class StockItToMe extends JFrame{
         userPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(userPane);
         userPane.setLayout(new BorderLayout(0, 0));
+        DefaultListModel<String> portfolio = new DefaultListModel<String>();
+        JScrollPane scrollPane_1;
+        JList<DefaultListModel<String>> portfolioList;
         
+        portfolio.addElement("Your Stocks will be listed here");
         
         //=====MAIN CATALOG=====//
         
@@ -215,8 +219,10 @@ public class StockItToMe extends JFrame{
 		  	  	public void windowClosed(WindowEvent j) {
 		  	  		// TODO Auto-generated method stub
 		  	  		currentUser = l.getUser();
-	  				System.out.println(currentUser);
+	  				System.out.println(currentUser.getUserName());
 		  	  		//System.out.println("closed");
+	  				fillListModel(currentUser, portfolio);
+	  				
 		  	  	}
 		
 		  	  	@Override
@@ -225,9 +231,9 @@ public class StockItToMe extends JFrame{
 		  	  			public void actionPerformed(ActionEvent e)
 		  	  		      {
 		  	  				currentUser = l.getUser();
-		  	  				System.out.println(currentUser);
+		  	  				System.out.println(currentUser.getUserName());
 		  	  				l.dispose();
-		  	  				SwingUtilities.updateComponentTreeUI(scrollPane_1);
+		  	  				
 		  	  		      }
 		  	  			};
 		  	  	}
@@ -297,8 +303,7 @@ public class StockItToMe extends JFrame{
         //updates users stocks
         
         
-        
-        JList<String> portfolioList = new JList<String>(currentUser.getStock());
+        portfolioList = new JList(portfolio);
         portfolioList.setPreferredSize(new Dimension(300, 450));
         portfolioList.setMaximumSize(new Dimension(300, 999999));
        
@@ -389,6 +394,13 @@ public class StockItToMe extends JFrame{
 		return true;
 	}
 	
-
+	public void fillListModel(User user, DefaultListModel<String> portfolio){
+		portfolio.clear();
+		String[] stocks = user.getStock();
+		for(String s : stocks) {
+			portfolio.addElement(s);
+		}
+		
+	}
 
 }
