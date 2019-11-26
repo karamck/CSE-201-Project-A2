@@ -332,7 +332,12 @@ public class StockItToMe extends JFrame{
                     		currentUser.removeStock(s);
                     		String[] theirs = currentUser.getStock();
                     		System.out.println(Arrays.toString(theirs));
-                    		fillListModel(currentUser, portfolio);
+                    		try {
+								fillListModel(currentUser, portfolio);
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
                     	}
                     	counter++;
                     }
