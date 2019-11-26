@@ -95,12 +95,7 @@ public class User implements Account {
     	addStockToPortfolio(stock.getIndex(), this.userName);
     }
     public void removeStock(Stock stock) {
-    	for(Stock s : stockList) {
-    		if(s.equals(stock)) {
-    			stockList.remove(s);
-    			break;
-    		}
-    	}
+    	stockList.remove(stock);
     	
 
     }
