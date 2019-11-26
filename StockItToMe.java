@@ -148,7 +148,12 @@ public class StockItToMe extends JFrame{
 							}
                     		String[] theirs = user.getStock();
                     		System.out.println(Arrays.toString(theirs));
-                    		fillListModel(currentUser, portfolio);
+                    		try {
+								fillListModel(currentUser, portfolio);
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
                     	}
                     	counter++;
                     }
@@ -198,13 +203,6 @@ public class StockItToMe extends JFrame{
         panel_1.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
         
         JButton btnLogin = new JButton("Login");
-        /*
-        btnLogin.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		loginScreen();
-        	}
-        });
-        */
         panel_1.add(btnLogin);
         
         btnLogin.addActionListener(new ActionListener()
@@ -327,12 +325,18 @@ public class StockItToMe extends JFrame{
                     int index = list.locationToIndex(me.getPoint());
                     System.out.println(index);
                     int counter = 0;
-                    for(Stock s : market) {
+                    for(Stock s : currentUser.stockList) {
                     	if(counter == index) {
+                    		System.out.println(s.getIndex());
                     		currentUser.removeStock(s);
                     		String[] theirs = currentUser.getStock();
                     		System.out.println(Arrays.toString(theirs));
-                    		fillListModel(currentUser, portfolio);
+                    		try {
+								fillListModel(currentUser, portfolio);
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
                     	}
                     	counter++;
                     }
