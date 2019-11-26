@@ -1,4 +1,8 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -94,10 +98,27 @@ public class User implements Account {
     	stockList.add(stock);
     	addStockToPortfolio(stock.getIndex(), this.userName);
     }
-    public void removeStock(Stock stock) {
+    public void removeStock(Stock stock) throws IOException {
     	stockList.remove(stock);
+    	String userFile = this.userName + ".txt";
     	
-
+    	File inputFile = new File(userFile);
+    	File tempFile = new File("myTempFile.txt");
+    	
+    	BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+    	BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+    	
+    	String lineToRemove = stock.getIndex();
+    	String currentLine;
+    	
+    	while((currentLine = reader.readLine()) != null) {
+    	    String trimmedLine = currentLine.trim();
+    	    if(trimmedLine.equals(lineToRemove)) continue;
+    	    writer.write(currentLine + System.getProperty("line.separator"));
+    	}
+    	writer.close(); 
+    	reader.close();
+    	boolean successful = tempFile.renameTo(inputFile);
     }
     
     private boolean addStockToPortfolio(String index, String username) throws IOException {
