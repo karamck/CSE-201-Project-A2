@@ -312,11 +312,12 @@ public class StockItToMe extends JFrame{
             public void mouseClicked(MouseEvent me) {
             	JList list = (JList)me.getSource();
             	if (me.getClickCount() == 2) {
-
+            		
                     // Double-click detected
                     int index = list.locationToIndex(me.getPoint());
                     System.out.println(index);
                     int counter = 0;
+<<<<<<< Updated upstream
                     for(Stock s : currentUser.stockList) {
                     	if(counter == index) {
                     		System.out.println(s.getIndex());
@@ -333,9 +334,48 @@ public class StockItToMe extends JFrame{
 							} catch (IOException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
+=======
+                    
+                    if (currentUser.isAdmin()) {
+                    	try {
+							for(String r : AddRequestDB.getRequests()) {
+								if (counter == index) {
+									System.out.println(r);
+									String[] split = r.split(" ");
+									r = split[1];
+									addStockToMarket(r);
+									AddRequestDB.removeRequest(r);
+									fillListModel(currentUser, portfolio);
+								}
+								counter++;
+>>>>>>> Stashed changes
 							}
-                    	}
-                    	counter++;
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+                    }
+                    else {
+                    	for(Stock s : currentUser.stockList) {
+                          	if(counter == index) {
+	                    		System.out.println(s.getIndex());
+	                    		try {
+									currentUser.removeStock(s);
+								} catch (IOException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+	                    		String[] theirs = currentUser.getStock();
+	                    		System.out.println(Arrays.toString(theirs));
+	                    		try {
+									fillListModel(currentUser, portfolio);
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+	                    	}
+	                    	counter++;
+	                    }
                     }
                     panel_3.revalidate();
                     panel_3.repaint();
