@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -38,7 +39,8 @@ public class User implements Account {
 		Scanner scnr = new Scanner(new File(file));
     	//populate data
 		while(scnr.hasNextLine()) {
-			String index = scnr.nextLine();
+			String[] line = scnr.nextLine().split(" ");
+			String index = line[0];
 			yahoofinance.Stock s = YahooFinance.get(index);
 			Stock stock = new Stock();
 			stock.setIndex(index);
@@ -46,7 +48,9 @@ public class User implements Account {
 			stock.setValue(s.getQuote().getPrice());
 			stock.setTrend(0.00);
 			stock.setNQE(s.getStats().getEarningsAnnouncement().toString());
+			stock.setAmount(Integer.parseInt(line[1]));
 			portfolio.add(stock);
+			System.out.println(line[1]);
 		}
 		scnr.close();
 		return portfolio;
@@ -89,7 +93,11 @@ public class User implements Account {
     	String[] stockString = new String[stockList.size()];
     	
     	for(int i=0;i<stockList.size();i++) {
-    		stockString[i]=stockList.get(i).getName();
+    		String index  = stockList.get(i).getIndex();
+    		String amount = Integer.toString(stockList.get(i).getAmount());
+    		BigDecimal value = stockList.get(i).getValue().multiply(new BigDecimal(stockList.get(i).getAmount()));
+    		String val = value.toString();
+    		stockString[i]=index + " x"+ amount + " = " + val;
     	}
     	return stockString;
     }
@@ -98,28 +106,74 @@ public class User implements Account {
     	stockList.add(stock);
     	addStockToPortfolio(stock.getIndex(), this.userName);
     }
-    public void removeStock(Stock stock) throws IOException {
-    	stockList.remove(stock);
-    	String userFile = this.userName + ".txt";
-    	
-    	File inputFile = new File(userFile);
-    	File tempFile = new File("myTempFile.txt");
-    	
-    	BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-    	BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
-    	
-    	String lineToRemove = stock.getIndex();
-    	String currentLine;
-    	
-    	while((currentLine = reader.readLine()) != null) {
-    	    String trimmedLine = currentLine.trim();
-    	    if(trimmedLine.equals(lineToRemove)) continue;
-    	    writer.write(currentLine + System.getProperty("line.separator"));
-    	}
-    	writer.close(); 
-    	reader.close();
-    	boolean successful = tempFile.renameTo(inputFile);
+    public boolean removeStockFromPortfolio(String symbol, String user) throws IOException {
+        symbol = symbol.trim();
+        String filename = user + ".txt";
+        File portf = new File(filename);
+        try {
+            int count = 0;
+            Scanner dbReader = new Scanner(portf);
+            String fileStuff = "";
+            while (dbReader.hasNextLine()) {
+                String line = dbReader.nextLine();
+                String[] splitLine = line.split(" ");
+                if (splitLine[0].equals(symbol)) {
+                }
+                else {
+                    if (count != 0) {
+                        fileStuff += "\n";
+                    }
+                    fileStuff += line;
+                }
+                count++;
+            }
+            dbReader.close();
+            FileWriter fw = new FileWriter(filename);
+            fw.write(fileStuff);
+            fw.close();
+            return true;
+        } catch (FileNotFoundException exception) {
+            System.out.println("File not found");
+        }
+        return false;
     }
+    
+    public boolean deleteOneStock(String symbol, String user) throws IOException{
+    	symbol = symbol.trim();
+        String filename = user + ".txt";
+        File portf = new File(filename);
+        try {
+            int count = 0;
+            Scanner dbReader = new Scanner(portf);
+            String fileStuff = "";
+            while (dbReader.hasNextLine()) {
+                String line = dbReader.nextLine();
+                String[] splitLine = line.split(" ");
+                if (splitLine[0].equals(symbol)) {
+                	int temp = Integer.parseInt(splitLine[1]);
+                	temp--;
+                	String temps = symbol + " " + temp + "\n";
+                	fileStuff+=temps;
+                }
+                else {
+                    if (count != 0) {
+                        fileStuff += "\n";
+                    }
+                    fileStuff += line;
+                }
+                count++;
+            }
+            dbReader.close();
+            FileWriter fw = new FileWriter(filename);
+            fw.write(fileStuff);
+            fw.close();
+            return true;
+        } catch (FileNotFoundException exception) {
+            System.out.println("File not found");
+        }
+        return false;
+    }
+
     
     private boolean addStockToPortfolio(String index, String username) throws IOException {
 		String file = username + ".txt";

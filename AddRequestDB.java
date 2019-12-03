@@ -59,7 +59,6 @@ public class AddRequestDB {
 
     // this is in progress
     public static boolean removeRequest(String symbol) throws IOException {
-        System.out.println("got in");
     	File unDB = new File("Add_Requests.txt");
         try {
             int count = 0;

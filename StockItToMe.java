@@ -333,7 +333,7 @@ public class StockItToMe extends JFrame{
 									addStockToMarket(r);
 									market = populateMarket();
 									fillMarketModel(market, indexes);
-									AddRequestDB.removeRequest(r);
+									AddRequestDB.removeRequest(r.trim());
 									fillListModel(currentUser, portfolio);
 								}
 								counter++;
@@ -348,7 +348,13 @@ public class StockItToMe extends JFrame{
                           	if(counter == index) {
 	                    		System.out.println(s.getIndex());
 	                    		try {
-									currentUser.removeStock(s);
+	                    			if(s.getAmount() == 1) {
+									currentUser.removeStockFromPortfolio(s.getIndex(),currentUser.getUserName());
+									currentUser.stockList.remove(s);
+	                    			} else {
+	                    				s.removeAnother();
+	                    				
+	                    			}
 								} catch (IOException e1) {
 									// TODO Auto-generated catch block
 									e1.printStackTrace();

@@ -7,18 +7,20 @@ public class Stock implements Comparable<Stock>{
 	private BigDecimal value;
 	private double trend;
 	private String NQE; //next quarter earnings
+	private int amount;
 	
 	//default constructor
 	public Stock() {
 	    
 	}
-	public Stock(String name, String description, String index, BigDecimal value, double trend, String nQE) {
+	public Stock(String name, String description, String index, BigDecimal value, double trend, String nQE, int amount) {
 	    this.name = name;
 	    this.description = description;
 	    this.index = index;
 	    this.value = value;
 	    this.trend = trend;
 	    this.NQE = nQE;
+	    this.amount = amount;
 	}
 	public Stock(String name) {
 		this.name=name;
@@ -67,5 +69,17 @@ public class Stock implements Comparable<Stock>{
 		// TODO Auto-generated method stub
 		
 		return index.compareTo(comparedStock.getIndex());
+	}
+	public int getAmount() {
+		return this.amount;
+	}
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
+	public void addAnother() {
+		this.amount++;
+	}
+	public void removeAnother() {
+		this.amount--;
 	}
 }
