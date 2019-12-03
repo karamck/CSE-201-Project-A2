@@ -62,6 +62,7 @@ public class StockItToMe extends JFrame{
     private JPanel userPane;
     private login l;
     private User currentUser = new User();
+    private ArrayList<Stock> market;
 
 	JList<String> list = new JList<String>();
 	
@@ -71,6 +72,7 @@ public class StockItToMe extends JFrame{
      * Launch the application.
      */
     public static void main(String[] args) {
+    	System.out.println("hi");
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
@@ -107,7 +109,7 @@ public class StockItToMe extends JFrame{
         JScrollPane scrollPane_1;
         JList<DefaultListModel<String>> portfolioList;
         JList<DefaultListModel<String>> stockList;
-        ArrayList<Stock> market = populateMarket();
+        market = populateMarket();
         portfolio.addElement("Your Stocks will be listed here");
         fillMarketModel(market, indexes);
         //=====MAIN CATALOG=====//
@@ -317,38 +319,24 @@ public class StockItToMe extends JFrame{
                     int index = list.locationToIndex(me.getPoint());
                     System.out.println(index);
                     int counter = 0;
-<<<<<<< Updated upstream
-                    for(Stock s : currentUser.stockList) {
-                    	if(counter == index) {
-                    		System.out.println(s.getIndex());
-                    		try {
-                    			currentUser.removeStock(s);
-							} catch (IOException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-                    		String[] theirs = currentUser.getStock();
-                    		System.out.println(Arrays.toString(theirs));
-                    		try {
-								fillListModel(currentUser, portfolio);
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-=======
                     
                     if (currentUser.isAdmin()) {
+                    	System.out.println("hi");
                     	try {
 							for(String r : AddRequestDB.getRequests()) {
 								if (counter == index) {
 									System.out.println(r);
 									String[] split = r.split(" ");
 									r = split[1];
+									System.out.println("this is the symbol: " + r);
+									
 									addStockToMarket(r);
+									market = populateMarket();
+									fillMarketModel(market, indexes);
 									AddRequestDB.removeRequest(r);
 									fillListModel(currentUser, portfolio);
 								}
 								counter++;
->>>>>>> Stashed changes
 							}
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
@@ -379,7 +367,8 @@ public class StockItToMe extends JFrame{
                     }
                     panel_3.revalidate();
                     panel_3.repaint();
-                } else if (me.getClickCount() == 3) {
+                    }
+                    else if (me.getClickCount() == 3) {
 
                     // Triple-click detected
                     int index = list.locationToIndex(me.getPoint());
@@ -436,6 +425,7 @@ public class StockItToMe extends JFrame{
 	
 	private boolean addStockToMarket(String index) throws IOException {
 		FileWriter filewriter = new FileWriter("Market.txt",true);
+		//filewriter.write(System.getProperty("line.separator"));
 		filewriter.write(index);
 		filewriter.close();
 		return true;
@@ -450,7 +440,7 @@ public class StockItToMe extends JFrame{
 	}
 	
 	public void fillListModel(User user, DefaultListModel<String> portfolio) throws IOException{
-		if (UserNameDB.checkAdmin(user.getUserName())) {
+		if (user.isAdmin()) {
 			portfolio.clear();
 			String[] requests = AddRequestDB.getRequests();
 			for(String s : requests) {
@@ -468,3 +458,4 @@ public class StockItToMe extends JFrame{
 	}
 
 }
+

@@ -42,10 +42,10 @@ public class AddRequestDB {
                 String line = dbReader.nextLine();
                 String line2 = "";
                 String[] splitLine = line.split(" ");
-                line2 += "Symbol:  " + splitLine[0] + "\n";
-                line2 += " Name:  " + splitLine[1] + "\n";
-                line2 += " Currency:  " + splitLine[2] + "\n";
-                line2 += " Exhange:  " + splitLine[3] + "\n\n\n";
+                line2 += "Symbol: " + splitLine[0] + "\n";
+                line2 += " Name: " + splitLine[1] + "\n";
+                line2 += " Currency: " + splitLine[2] + "\n";
+                line2 += " Exhange: " + splitLine[3] + "\n\n\n";
                 list.add(line2);
 
             }
@@ -59,7 +59,8 @@ public class AddRequestDB {
 
     // this is in progress
     public static boolean removeRequest(String symbol) throws IOException {
-        File unDB = new File("Add_Requests.txt");
+        System.out.println("got in");
+    	File unDB = new File("Add_Requests.txt");
         try {
             int count = 0;
             Scanner dbReader = new Scanner(unDB);
@@ -68,7 +69,9 @@ public class AddRequestDB {
                 String line = dbReader.nextLine();
                 String[] splitLine = line.split(" ");
                 if (splitLine[0].equals(symbol)) {
-                } else {
+                	System.out.println("HERE!");
+                } 
+                else {
                     if (count != 0) {
                         fileStuff += "\n";
                     }
