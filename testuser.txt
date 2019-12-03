@@ -1,4 +1,5 @@
+
 GOOGL
 TSLA
 AMZN
-DELL
+DIS
