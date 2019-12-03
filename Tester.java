@@ -34,7 +34,6 @@ class AdminTester{
 	@Test
 	void testAdminClass() {
         	Admin admin = new Admin();
-        	Admin admin2 = new Admin("name", "password");
 	}
 	
     	@Test
@@ -120,7 +119,6 @@ class UserClassTester{
 	@Test
     	void testerUserClass() {
      		User user = new User();
-     		User user2 = new User("name", "password");
 	}
 	
 	@Test
