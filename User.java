@@ -130,4 +130,8 @@ public class User implements Account {
 		return true;
 	}
     
+    public boolean isAdmin() {
+    	return UserNameDB.checkAdmin(userName);
+    }
+    
 }
