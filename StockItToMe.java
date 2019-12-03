@@ -90,6 +90,8 @@ public class StockItToMe extends JFrame{
      * @throws IOException 
      */
     public StockItToMe() throws IOException {
+    	setForeground(Color.GREEN);
+    	setBackground(Color.BLACK);
     	userScreen();
     }
     
@@ -101,6 +103,7 @@ public class StockItToMe extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 969, 555);
         userPane = new JPanel();
+        userPane.setForeground(new Color(0, 255, 0));
         userPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(userPane);
         userPane.setLayout(new BorderLayout(0, 0));

@@ -11,18 +11,6 @@ import java.util.Map;
 
 public class UserNameDB {
 
-//    public static void main(String[] args) {
-//        File unDB = new File("Usernames_Passwords.txt");
-//        try {
-//            Scanner dbReader = new Scanner(unDB);
-//
-//            dbReader.close();
-//        } catch (FileNotFoundException exception) {
-//            System.out.println("File not found");
-//        }
-//
-//    }
-
     /**
      * If the userName is present and the password is correct
      * @return true if successful, false otherwise
