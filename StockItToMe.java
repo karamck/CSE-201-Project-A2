@@ -140,6 +140,7 @@ public class StockItToMe extends JFrame{
                     	if(counter == index) {
                     		if (currentUser.isAdmin()) {
                     			removeStockToMarket(s);
+                    			
                     			try {
 									market = populateMarket();
 								} catch (IOException e) {
@@ -290,6 +291,51 @@ public class StockItToMe extends JFrame{
         	public void actionPerformed(ActionEvent e) {
         		addRequest a = new addRequest();
         		a.setVisible(true);
+        		a.addWindowListener(new WindowListener() {
+
+					@Override
+					public void windowActivated(WindowEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void windowClosed(WindowEvent e) {
+						// TODO Auto-generated method stub
+						refreshStocks(indexes, portfolio);
+					}
+
+					@Override
+					public void windowClosing(WindowEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void windowDeactivated(WindowEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void windowDeiconified(WindowEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void windowIconified(WindowEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void windowOpened(WindowEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+        			
+        		});
         	}
         });
         panel_1.add(btnNewStock);
@@ -344,12 +390,11 @@ public class StockItToMe extends JFrame{
 									System.out.println(r);
 									String[] split = r.split(" ");
 									r = split[1];
-									System.out.println("this is the symbol: " + r);
-									
+									r = r.trim();
 									addStockToMarket(r);
 									market = populateMarket();
 									fillMarketModel(market, indexes);
-									AddRequestDB.removeRequest(r.trim());
+									AddRequestDB.removeRequest(r);
 									fillListModel(currentUser, portfolio);
 								}
 								counter++;
@@ -442,12 +487,26 @@ public class StockItToMe extends JFrame{
 		return market;
 	}
 	
-	
-	
+	private void refreshStocks(DefaultListModel<String> indexes, DefaultListModel<String> portfolio) {
+		try {
+			market = populateMarket();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			fillListModel(currentUser, portfolio);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		fillMarketModel(market, indexes);
+	}
 	
 	private boolean addStockToMarket(String index) throws IOException {
 		FileWriter filewriter = new FileWriter("Market.txt",true);
 		//filewriter.write(System.getProperty("line.separator"));
+		filewriter.write("\n");
 		filewriter.write(index);
 		filewriter.close();
 		return true;
@@ -515,6 +574,7 @@ public class StockItToMe extends JFrame{
 		}
 		
 	}
+	
 
 }
 
