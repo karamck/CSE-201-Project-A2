@@ -328,7 +328,12 @@ public class StockItToMe extends JFrame{
                     for(Stock s : currentUser.stockList) {
                     	if(counter == index) {
                     		System.out.println(s.getIndex());
-                    		currentUser.removeStock(s);
+                    		try {
+								currentUser.removeStock(s);
+							} catch (IOException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
                     		String[] theirs = currentUser.getStock();
                     		System.out.println(Arrays.toString(theirs));
                     		try {
