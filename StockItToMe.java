@@ -42,6 +42,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -137,20 +138,32 @@ public class StockItToMe extends JFrame{
                     int counter = 0;
                     for(Stock s : market) {
                     	if(counter == index) {
-                    		try {
-								currentUser.addStock(s);
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-                    		String[] theirs = currentUser.getStock();
-                    		System.out.println(Arrays.toString(theirs));
-                    		try {
-								fillListModel(currentUser, portfolio);
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
+                    		if (currentUser.isAdmin()) {
+                    			removeStockToMarket(s);
+                    			try {
+									market = populateMarket();
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								fillMarketModel(market, indexes);                    			
+                    		}
+                    		else {
+	                    		try {
+									currentUser.addStock(s);
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+	                    		String[] theirs = currentUser.getStock();
+	                    		System.out.println(Arrays.toString(theirs));
+	                    		try {
+									fillListModel(currentUser, portfolio);
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+                    		}
                     	}
                     	counter++;
                     }
@@ -438,6 +451,43 @@ public class StockItToMe extends JFrame{
 		filewriter.write(index);
 		filewriter.close();
 		return true;
+	}
+	
+	private boolean removeStockToMarket(Stock s) {
+		File unDB = new File("Market.txt");
+		String index = s.getIndex();
+        try {
+            int count = 0;
+            Scanner dbReader = new Scanner(unDB);
+            String fileStuff = "";
+            while (dbReader.hasNextLine()) {
+                String line = dbReader.nextLine();
+                String[] splitLine = line.split(" ");
+                if (splitLine[0].equals(index)) {
+                } 
+                else {
+                    if (count != 0) {
+                        fileStuff += "\n";
+                    }
+                    fileStuff += line;
+                }
+                count++;
+            }
+            dbReader.close();
+            FileWriter fw = new FileWriter("Market.txt");
+            // BufferedWriter br = new BufferedWriter(fw);
+            // br.write(fileStuff);
+            fw.write(fileStuff);
+            fw.close();
+            // br.close();
+            return true;
+        } catch (FileNotFoundException exception) {
+            System.out.println("File not found");
+        } catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        return false;
 	}
 	
 	public void fillMarketModel(ArrayList<Stock> market,DefaultListModel<String> indexes ) {
