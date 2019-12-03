@@ -96,15 +96,15 @@ class StockClassTester{
 	
 	@Test
 	void testStocktoString() {
-		Stock stock = new Stock("Name", "Description", "Index", new BigDecimal(3), 0.5, "00/00/0000");
+		Stock stock = new Stock("Name", "Description", "Index", new BigDecimal(3), 0.5, "00/00/0000", 1);
 		assertEquals(stock.toString(), "Index (Name) | Value: 3 | Trend: 0.5 | nQE: 00/00/0000");
 	}
 	@Test
 	void testStockCompareTo() {
-		Stock stockA = new Stock("1","","AA", new BigDecimal(0),0,"");
-		Stock stockB = new Stock("3","","ABC", new BigDecimal(0),0,"");
-		Stock stockC = new Stock("2","","AAA", new BigDecimal(0),0,"");
-		Stock stockF = new Stock("4","","ABC", new BigDecimal(0),0,"");
+		Stock stockA = new Stock("1","","AA", new BigDecimal(0),0,"", 1);
+		Stock stockB = new Stock("3","","ABC", new BigDecimal(0),0,"", 1);
+		Stock stockC = new Stock("2","","AAA", new BigDecimal(0),0,"", 1);
+		Stock stockF = new Stock("4","","ABC", new BigDecimal(0),0,"", 1);
 		
 		assertEquals(stockB.compareTo(stockF), 0);
 		assertTrue(stockA.compareTo(stockC) > 0);
