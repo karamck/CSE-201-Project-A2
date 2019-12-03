@@ -91,7 +91,8 @@ public class StockItToMe extends JFrame{
     	userScreen();
     }
     
-    public void userScreen() throws IOException {
+    @SuppressWarnings("unchecked")
+	public void userScreen() throws IOException {
     	
     	setTitle("Stock It To Me");
     	setIconImage(Toolkit.getDefaultToolkit().getImage(addRequest.class.getResource("AppsyntheIcon.png")));
@@ -102,11 +103,13 @@ public class StockItToMe extends JFrame{
         setContentPane(userPane);
         userPane.setLayout(new BorderLayout(0, 0));
         DefaultListModel<String> portfolio = new DefaultListModel<String>();
+        DefaultListModel<String> indexes = new DefaultListModel<String>();
         JScrollPane scrollPane_1;
         JList<DefaultListModel<String>> portfolioList;
-        
+        JList<DefaultListModel<String>> stockList;
+        ArrayList<Stock> market = populateMarket();
         portfolio.addElement("Your Stocks will be listed here");
-        
+        fillMarketModel(market, indexes);
         //=====MAIN CATALOG=====//
         
         JPanel browser_panel = new JPanel();
@@ -114,19 +117,8 @@ public class StockItToMe extends JFrame{
         browser_panel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
         
         
-        //generate data
-        //String indexes[] = { "GOOGL", "AAPL", "AMD", "CLDR", "TWTR", "TSLA","FB", "DIS" };
-        ArrayList<Stock> market = populateMarket();
-        String indexes[] = new String[market.size()];
-        int counter = 0;
-        for(Stock s : market) {
-        	indexes[counter] = s.toString();
-        	counter++;
-        }
-        
-        
         //create list
-        JList<String> stockList = new JList<String>(indexes);
+        stockList = new JList(indexes);
         stockList.setPreferredSize(new Dimension(750, 440));
         stockList.setMaximumSize(new Dimension(950, 999999));
        
@@ -146,7 +138,7 @@ public class StockItToMe extends JFrame{
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
-                    		String[] theirs = user.getStock();
+                    		String[] theirs = currentUser.getStock();
                     		System.out.println(Arrays.toString(theirs));
                     		try {
 								fillListModel(currentUser, portfolio);
@@ -329,7 +321,7 @@ public class StockItToMe extends JFrame{
                     	if(counter == index) {
                     		System.out.println(s.getIndex());
                     		try {
-								currentUser.removeStock(s);
+                    			currentUser.removeStock(s);
 							} catch (IOException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
@@ -409,6 +401,13 @@ public class StockItToMe extends JFrame{
 		return true;
 	}
 	
+	public void fillMarketModel(ArrayList<Stock> market,DefaultListModel<String> indexes ) {
+		indexes.clear();
+		String[] stocks = new String[market.size()];
+		for(Stock s : market) {
+			indexes.addElement(s.toString());
+		}
+	}
 	
 	public void fillListModel(User user, DefaultListModel<String> portfolio) throws IOException{
 		if (UserNameDB.checkAdmin(user.getUserName())) {
