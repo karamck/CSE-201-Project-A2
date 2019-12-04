@@ -42,6 +42,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -97,6 +98,7 @@ public class StockItToMe extends JFrame{
 
 	@SuppressWarnings("unchecked")
 	public void userScreen() throws IOException {
+<<<<<<< HEAD
 
 		setTitle("Stock It To Me");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(addRequest.class.getResource("AppsyntheIcon.png")));
@@ -256,28 +258,255 @@ public class StockItToMe extends JFrame{
 							}
 						};
 					}
+=======
+    	
+    	setTitle("Stock It To Me");
+    	setIconImage(Toolkit.getDefaultToolkit().getImage(addRequest.class.getResource("AppsyntheIcon.png")));
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 969, 555);
+        userPane = new JPanel();
+        userPane.setForeground(new Color(0, 255, 0));
+        userPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(userPane);
+        userPane.setLayout(new BorderLayout(0, 0));
+        DefaultListModel<String> portfolio = new DefaultListModel<String>();
+        DefaultListModel<String> indexes = new DefaultListModel<String>();
+        JScrollPane scrollPane_1;
+        JList<DefaultListModel<String>> portfolioList;
+        JList<DefaultListModel<String>> stockList;
+        market = populateMarket();
+        portfolio.addElement("Your Stocks will be listed here");
+        fillMarketModel(market, indexes);
+        //=====MAIN CATALOG=====//
+        
+        JPanel browser_panel = new JPanel();
+        userPane.add(browser_panel);
+        browser_panel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
+        
+        
+        //create list
+        stockList = new JList(indexes);
+        stockList.setPreferredSize(new Dimension(750, 440));
+        stockList.setMaximumSize(new Dimension(950, 999999));
+       
+        stockList.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent me) {
+            	JList list = (JList)me.getSource();
+            	if (me.getClickCount() == 2) {
+
+                    // Double-click detected
+                    int index = list.locationToIndex(me.getPoint());
+                    int counter = 0;
+                    for(Stock s : market) {
+                    	if(counter == index) {
+                    		if (currentUser.isAdmin()) {
+                    			removeStockToMarket(s);
+                    			
+                    			try {
+									market = populateMarket();
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								fillMarketModel(market, indexes);                    			
+                    		}
+                    		else {
+	                    		try {
+									currentUser.addStock(s);
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+	                    		String[] theirs = currentUser.getStock();
+	                    		System.out.println(Arrays.toString(theirs));
+	                    		try {
+									fillListModel(currentUser, portfolio);
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+                    		}
+                    	}
+                    	counter++;
+                    }
+                    userPane.revalidate();
+                    userPane.repaint();
+                } else if (me.getClickCount() == 3) {
+
+                    // Triple-click detected
+                    int index = list.locationToIndex(me.getPoint());
+                }
+            }
+         });
+        
+        //create pane using list
+        JScrollPane mainScrollPane = new JScrollPane(stockList);
+        mainScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        mainScrollPane.setPreferredSize(new Dimension(750, 450));
+        mainScrollPane.setMaximumSize(new Dimension(950, 999999));
+        
+        browser_panel.add(mainScrollPane);
+        
+        
+        
+        JPanel panel = new JPanel();
+        userPane.add(panel, BorderLayout.NORTH);
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        
+        JPanel topbar = new JPanel();
+        userPane.add(topbar, BorderLayout.NORTH);
+        topbar.setLayout(new BoxLayout(topbar, BoxLayout.X_AXIS));
+        
+        JPanel panelRight = new JPanel();
+        topbar.add(panelRight);
+        panelRight.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
+        
+        JLabel lblStockItTo = new JLabel("Stock It To Me");
+        panelRight.add(lblStockItTo);
+        
+
+        
+        //=====TOP-RIGHT BUTTON GROUP=====//
+        
+        
+        
+        JPanel panel_1 = new JPanel();
+        topbar.add(panel_1);
+        panel_1.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
+        
+        JButton btnLogin = new JButton("Login");
+        panel_1.add(btnLogin);
+        
+        btnLogin.addActionListener(new ActionListener()
+	    {
+  	      public void actionPerformed(ActionEvent e)
+  	      {
+  	        l = new login();
+  	        l.setVisible(true);
+  	        l.addWindowListener(new WindowListener() {
+
+		  	    @Override
+		  	  	public void windowActivated(WindowEvent arg0) {
+		  	  		// TODO Auto-generated method stub
+		  	  		
+		  	  	}
+		
+		  	  	@Override
+		  	  	public void windowClosed(WindowEvent j) {
+		  	  		// TODO Auto-generated method stub
+		  	  		currentUser = l.getUser();
+	  				System.out.println(currentUser.getUserName());
+		  	  		//System.out.println("closed");
+	  				try {
+						fillListModel(currentUser, portfolio);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+	  				
+		  	  	}
+		
+		  	  	@Override
+		  	  	public void windowClosing(WindowEvent e) {
+		  	  		ActionListener task = new ActionListener() {
+		  	  			public void actionPerformed(ActionEvent e)
+		  	  		      {
+		  	  				currentUser = l.getUser();
+		  	  				System.out.println(currentUser.getUserName());
+		  	  				l.dispose();
+		  	  				
+		  	  		      }
+		  	  			};
+		  	  	}
+		
+		  	  	@Override
+		  	  	public void windowDeactivated(WindowEvent e) {
+		  	  		// TODO Auto-generated method stub
+		  	  		//System.out.print("deactivated");
+		  	  	}
+		
+		  	  	@Override
+		  	  	public void windowDeiconified(WindowEvent e) {
+		  	  		// TODO Auto-generated method stub
+		  	  		
+		  	  	}
+		
+		  	  	@Override
+		  	  	public void windowIconified(WindowEvent e) {
+		  	  		// TODO Auto-generated method stub
+		  	  		System.out.print("minimized");
+		  	  	}
+		
+		  	  	@Override
+		  	  	public void windowOpened(WindowEvent e) {
+		  	  		// TODO Auto-generated method stub
+		  	  		System.out.print("opened");
+		  	  	}
+  	        	
+  	        });
+  	      }
+  	    });
+        
+        JButton btnNewStock = new JButton("Add Request");
+        btnNewStock.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		addRequest a = new addRequest();
+        		a.setVisible(true);
+        		a.addWindowListener(new WindowListener() {
+
+					@Override
+					public void windowActivated(WindowEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void windowClosed(WindowEvent e) {
+						// TODO Auto-generated method stub
+						refreshStocks(indexes, portfolio);
+					}
+
+					@Override
+					public void windowClosing(WindowEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+>>>>>>> 705c450b77040969c945159602515e667a4e4d90
 
 					@Override
 					public void windowDeactivated(WindowEvent e) {
 						// TODO Auto-generated method stub
+<<<<<<< HEAD
 						//System.out.print("deactivated");
+=======
+						
+>>>>>>> 705c450b77040969c945159602515e667a4e4d90
 					}
 
 					@Override
 					public void windowDeiconified(WindowEvent e) {
 						// TODO Auto-generated method stub
+<<<<<<< HEAD
 
+=======
+						
+>>>>>>> 705c450b77040969c945159602515e667a4e4d90
 					}
 
 					@Override
 					public void windowIconified(WindowEvent e) {
 						// TODO Auto-generated method stub
+<<<<<<< HEAD
 						System.out.print("minimized");
+=======
+						
+>>>>>>> 705c450b77040969c945159602515e667a4e4d90
 					}
 
 					@Override
 					public void windowOpened(WindowEvent e) {
 						// TODO Auto-generated method stub
+<<<<<<< HEAD
 						System.out.print("opened");
 					}
 
@@ -304,6 +533,26 @@ public class StockItToMe extends JFrame{
 		userPane.add(sidebar, BorderLayout.EAST);
 		sidebar.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
 		/*
+=======
+						
+					}
+        			
+        		});
+        	}
+        });
+        panel_1.add(btnNewStock);
+        
+        
+        //=====END TOP-RIGHT BUTTON GROUP=====//
+        
+        //=====SIDEBAR CODE=====//
+        
+        
+        JPanel sidebar = new JPanel();
+        userPane.add(sidebar, BorderLayout.EAST);
+        sidebar.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
+        /*
+>>>>>>> 705c450b77040969c945159602515e667a4e4d90
         JLabel lblStockItToIco = new JLabel();
         Icon icon = new ImageIcon(getClass().getResource("stockItIcon.png"));         
         lblStockItToIco.setIcon(icon);
@@ -344,12 +593,16 @@ public class StockItToMe extends JFrame{
 									System.out.println(r);
 									String[] split = r.split(" ");
 									r = split[1];
+<<<<<<< HEAD
 									System.out.println("this is the symbol: " + r);
 
+=======
+									r = r.trim();
+>>>>>>> 705c450b77040969c945159602515e667a4e4d90
 									addStockToMarket(r);
 									market = populateMarket();
 									fillMarketModel(market, indexes);
-									AddRequestDB.removeRequest(r.trim());
+									AddRequestDB.removeRequest(r);
 									fillListModel(currentUser, portfolio);
 								}
 								counter++;
@@ -441,18 +694,80 @@ public class StockItToMe extends JFrame{
 		scnr.close();
 		return market;
 	}
+<<<<<<< HEAD
 
 
 
 
+=======
+	
+	private void refreshStocks(DefaultListModel<String> indexes, DefaultListModel<String> portfolio) {
+		try {
+			market = populateMarket();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			fillListModel(currentUser, portfolio);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		fillMarketModel(market, indexes);
+	}
+	
+>>>>>>> 705c450b77040969c945159602515e667a4e4d90
 	private boolean addStockToMarket(String index) throws IOException {
 		FileWriter filewriter = new FileWriter("Market.txt",true);
 		//filewriter.write(System.getProperty("line.separator"));
+		filewriter.write("\n");
 		filewriter.write(index);
 		filewriter.close();
 		return true;
 	}
+<<<<<<< HEAD
 
+=======
+	
+	private boolean removeStockToMarket(Stock s) {
+		File unDB = new File("Market.txt");
+		String index = s.getIndex();
+        try {
+            int count = 0;
+            Scanner dbReader = new Scanner(unDB);
+            String fileStuff = "";
+            while (dbReader.hasNextLine()) {
+                String line = dbReader.nextLine();
+                String[] splitLine = line.split(" ");
+                if (splitLine[0].equals(index)) {
+                } 
+                else {
+                    if (count != 0) {
+                        fileStuff += "\n";
+                    }
+                    fileStuff += line;
+                }
+                count++;
+            }
+            dbReader.close();
+            FileWriter fw = new FileWriter("Market.txt");
+            // BufferedWriter br = new BufferedWriter(fw);
+            // br.write(fileStuff);
+            fw.write(fileStuff);
+            fw.close();
+            // br.close();
+            return true;
+        } catch (FileNotFoundException exception) {
+            System.out.println("File not found");
+        } catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        return false;
+	}
+	
+>>>>>>> 705c450b77040969c945159602515e667a4e4d90
 	public void fillMarketModel(ArrayList<Stock> market,DefaultListModel<String> indexes ) {
 		indexes.clear();
 		String[] stocks = new String[market.size()];
@@ -478,6 +793,7 @@ public class StockItToMe extends JFrame{
 		}
 
 	}
+	
 
 }
 
