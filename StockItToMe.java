@@ -461,6 +461,12 @@ public class StockItToMe extends JFrame{
     	//rlist.setBounds(48, 39, 1, 1);
     	//scrollPane_1.setViewportView(rlist);
     	
+        BigDecimal total = new BigDecimal(0);
+        for (Stock s : currentUser.stockList) {
+        	total = total.add(s.getValue());
+        }
+        JLabel runningTotalDisplay = new JLabel("Total Value: $" + total.floatValue());
+        sidebar.add(runningTotalDisplay);
         table = new JTable();
         table.setPreferredScrollableViewportSize(new Dimension(150, 400));
 
