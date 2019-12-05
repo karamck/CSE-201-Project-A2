@@ -497,8 +497,7 @@ public class StockItToMe extends JFrame{
 			e.printStackTrace();
 		}
 		try {
-			if(!currentUser.isAdmin())
-				fillListModel(currentUser, portfolio);
+			fillListModel(currentUser, portfolio);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

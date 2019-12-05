@@ -103,19 +103,10 @@ public class User implements Account {
     }
     
     public void addStock(Stock stock) throws IOException {
-//    	if(stockList.contains(stock)) {
-//    		for(Stock s : stockList) {
-//    			if(s.equals(stock)) {
-//    				s.addAnother();
-//    				addOneStock(s.getIndex(), this.userName);
-//    			}
-//    			
-//    		}
-//    	}else {
     		stock.setAmount(1);
     		stockList.add(stock);
     		addStockToPortfolio(stock.getIndex(), this.userName);
-    	//}
+
     }
     public boolean removeStockFromPortfolio(String symbol, String user) throws IOException {
         symbol = symbol.trim();
@@ -128,18 +119,17 @@ public class User implements Account {
             while (dbReader.hasNextLine()) {
                 String line = dbReader.nextLine();
                 String[] splitLine = line.split(" ");
-                if (splitLine[0].equals(symbol)) {
-                }
-                else {
-                    if (count != 0) {
-                        fileStuff += "\n";
-                    }
+                if (!splitLine[0].equals(symbol)) {
                     fileStuff += line;
+                    fileStuff += "\n";
                 }
                 count++;
             }
             dbReader.close();
             FileWriter fw = new FileWriter(filename);
+            //if(count != 1) {
+            //fileStuff += "\n";
+            //}
             fw.write(fileStuff);
             fw.close();
             return true;
@@ -181,6 +171,7 @@ public class User implements Account {
             }
             dbReader.close();
             FileWriter fw = new FileWriter(filename);
+            fileStuff += "\n";
             fw.write(fileStuff);
             fw.close();
             return true;
@@ -222,6 +213,7 @@ public class User implements Account {
             }
             dbReader.close();
             FileWriter fw = new FileWriter(filename);
+            fileStuff += "\n";
             fw.write(fileStuff);
             fw.close();
             return true;
@@ -234,8 +226,8 @@ public class User implements Account {
     private boolean addStockToPortfolio(String index, String username) throws IOException {
 		String file = username + ".txt";
 		FileWriter filewriter = new FileWriter(file,true);
-		filewriter.write(System.getProperty( "line.separator" ));
-		filewriter.write(index + " 1");
+		//filewriter.write(System.getProperty( "line.separator" ));
+		filewriter.write(index + " 1\n");
 		filewriter.close();
 		return true;
 	}
