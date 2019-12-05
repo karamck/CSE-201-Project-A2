@@ -220,6 +220,17 @@ public class StockItToMe extends JFrame{
 		panelRight.add(lblStockItTo);
 
 
+		JButton btnRefresh = new JButton("Refresh");
+		panelRight.add(btnRefresh);
+		
+		btnRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				refreshStocks(indexes, portfolio);
+				updatePortfolioTotal();
+			}
+		});
+
+
 
 		//=====TOP-RIGHT BUTTON GROUP=====//
 
@@ -486,7 +497,8 @@ public class StockItToMe extends JFrame{
 			e.printStackTrace();
 		}
 		try {
-			fillListModel(currentUser, portfolio);
+			if(!currentUser.isAdmin())
+				fillListModel(currentUser, portfolio);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -496,6 +508,11 @@ public class StockItToMe extends JFrame{
 	}
 	
 	private void updatePortfolioTotal() {
+		if (currentUser.isAdmin())
+		{
+			runningTotalDisplay.setText("");
+			return;
+		}
 		System.out.println("Yeet");
 		totalValue = new BigDecimal(0);
         for (Stock s : currentUser.stockList) {
