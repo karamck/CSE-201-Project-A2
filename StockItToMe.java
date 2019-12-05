@@ -63,6 +63,8 @@ public class StockItToMe extends JFrame{
 	private login l;
 	private User currentUser = new User();
 	private ArrayList<Stock> market;
+	private JLabel runningTotalDisplay;
+	private BigDecimal totalValue;
 
 	JList<String> list = new JList<String>();
 
@@ -188,6 +190,7 @@ public class StockItToMe extends JFrame{
 					}
 		        }
 				
+				updatePortfolioTotal();
 			}
 		});
 
@@ -253,6 +256,8 @@ public class StockItToMe extends JFrame{
 		  	  		//System.out.println("closed");
 	  				try {
 						fillListModel(currentUser, portfolio);
+
+						updatePortfolioTotal();
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -268,7 +273,7 @@ public class StockItToMe extends JFrame{
 		  	  				currentUser = l.getUser();
 		  	  				System.out.println(currentUser.getUserName());
 		  	  				l.dispose();
-		  	  				
+		  	  				updatePortfolioTotal();
 		  	  		      }
 		  	  			};
 		  	  	}
@@ -326,7 +331,6 @@ public class StockItToMe extends JFrame{
         //=====SIDEBAR CODE=====//
         
         
-
 		JPanel panel_3 = new JPanel();
 		sidebar.add(panel_3);
 		panel_3.setMaximumSize(new Dimension(300, 99999));
@@ -346,6 +350,7 @@ public class StockItToMe extends JFrame{
 
 		portfolioList.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent me) {
+
 				JList list = (JList)me.getSource();
 				if (me.getClickCount() == 2) {
 
@@ -374,6 +379,8 @@ public class StockItToMe extends JFrame{
 							}
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
+
+							updatePortfolioTotal();
 							e.printStackTrace();
 						}
 					}
@@ -399,6 +406,7 @@ public class StockItToMe extends JFrame{
 									fillListModel(currentUser, portfolio);
 								} catch (IOException e) {
 									// TODO Auto-generated catch block
+									updatePortfolioTotal();
 									e.printStackTrace();
 								}
 							}
@@ -428,10 +436,12 @@ public class StockItToMe extends JFrame{
 							}
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
+							updatePortfolioTotal();
 							e.printStackTrace();
 						}
 					}
 		        }
+				updatePortfolioTotal();
 			}
 		});
 
@@ -442,6 +452,9 @@ public class StockItToMe extends JFrame{
 		scrollPane_1.setAlignmentY(Component.TOP_ALIGNMENT);
 		scrollPane_1.setAlignmentX(Component.LEFT_ALIGNMENT);
 		scrollPane_1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+		runningTotalDisplay = new JLabel("Total Value: $0");
+        sidebar.add(runningTotalDisplay);
 
 		//=====END SIDEBAR=====//
 
@@ -465,7 +478,6 @@ public class StockItToMe extends JFrame{
 		scnr.close();
 		return market;
 	}
-
 	private void refreshStocks(DefaultListModel<String> indexes, DefaultListModel<String> portfolio) {
 		try {
 			market = populateMarket();
@@ -480,6 +492,17 @@ public class StockItToMe extends JFrame{
 			e.printStackTrace();
 		}
 		fillMarketModel(market, indexes);
+		updatePortfolioTotal();
+	}
+	
+	private void updatePortfolioTotal() {
+		System.out.println("Yeet");
+		totalValue = new BigDecimal(0);
+        for (Stock s : currentUser.stockList) {
+        	totalValue = totalValue.add(s.getValue());
+        }
+		
+        runningTotalDisplay.setText(String.format("Total Value: $%.2f", totalValue.floatValue()));
 	}
 	
 	private boolean addStockToMarket(String index) throws IOException {
