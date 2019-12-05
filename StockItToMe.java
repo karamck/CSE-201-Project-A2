@@ -391,6 +391,7 @@ public class StockItToMe extends JFrame{
 						}
 					}
 					else {
+						updatePortfolioTotal();
 						for(Stock s : currentUser.stockList) {
 							if(counter == index) {
 								System.out.println(s.getIndex());
@@ -509,7 +510,7 @@ public class StockItToMe extends JFrame{
 		}
 		totalValue = new BigDecimal(0);
         for (Stock s : currentUser.stockList) {
-        	totalValue = totalValue.add(s.getValue());
+        	totalValue = totalValue.add(s.getValue().multiply(new BigDecimal(s.getAmount())));
         }
 		
         runningTotalDisplay.setText(String.format("Total Value: $%.2f", totalValue.floatValue()));
