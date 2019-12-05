@@ -35,6 +35,11 @@ public class AddRequestDB {
     public static String[] getRequests() throws IOException {
         ArrayList<String> list = new ArrayList<String>();
         File unDB = new File("Add_Requests.txt");
+        String[] arrayOfStrings;
+        if(unDB.length() <= 1) {
+        	String[] noRequests = {"Add Requests will appear Here"};
+        	return noRequests;
+        }
         try {
             Scanner dbReader = new Scanner(unDB);
 
@@ -53,7 +58,7 @@ public class AddRequestDB {
         } catch (FileNotFoundException exception) {
             System.out.println("File not found");
         }
-        String[] arrayOfStrings = list.toArray(new String[list.size()]);
+        arrayOfStrings = list.toArray(new String[list.size()]);
         return arrayOfStrings;
     }
 
