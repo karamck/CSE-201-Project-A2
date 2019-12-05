@@ -64,6 +64,8 @@ public class StockItToMe extends JFrame{
 	private login l;
 	private User currentUser = new User();
 	private ArrayList<Stock> market;
+	private JLabel runningTotalDisplay;
+	private BigDecimal totalValue;
 
 	JList<String> list = new JList<String>();
 
@@ -175,6 +177,8 @@ public class StockItToMe extends JFrame{
                     // Triple-click detected
                     int index = list.locationToIndex(me.getPoint());
                 }
+
+				updatePortfolioTotal();
             }
          });
         
@@ -238,6 +242,8 @@ public class StockItToMe extends JFrame{
 		  	  		//System.out.println("closed");
 	  				try {
 						fillListModel(currentUser, portfolio);
+
+						updatePortfolioTotal();
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -405,6 +411,7 @@ public class StockItToMe extends JFrame{
 						}
 					}
 					else {
+						updatePortfolioTotal();
 						for(Stock s : currentUser.stockList) {
 							if(counter == index) {
 								System.out.println(s.getIndex());
@@ -432,6 +439,7 @@ public class StockItToMe extends JFrame{
 							counter++;
 						}
 					}
+
 					panel_3.revalidate();
 					panel_3.repaint();
 				}
@@ -440,6 +448,8 @@ public class StockItToMe extends JFrame{
 					// Triple-click detected
 					int index = list.locationToIndex(me.getPoint());
 				}
+
+				updatePortfolioTotal();
 			}
 		});
 
@@ -461,12 +471,7 @@ public class StockItToMe extends JFrame{
 		//rlist.setBounds(48, 39, 1, 1);
 		//scrollPane_1.setViewportView(rlist);
 
-
-		BigDecimal total = new BigDecimal(0);
-        for (Stock s : currentUser.stockList) {
-        	total = total.add(s.getValue());
-        }
-        JLabel runningTotalDisplay = new JLabel("Total Value: $" + total.floatValue());
+        runningTotalDisplay = new JLabel("Total Value: $0");
         sidebar.add(runningTotalDisplay);
 
 
@@ -510,6 +515,17 @@ public class StockItToMe extends JFrame{
 			e.printStackTrace();
 		}
 		fillMarketModel(market, indexes);
+		updatePortfolioTotal();
+	}
+	
+	private void updatePortfolioTotal() {
+		System.out.println("Yeet");
+		totalValue = new BigDecimal(0);
+        for (Stock s : currentUser.stockList) {
+        	totalValue = totalValue.add(s.getValue());
+        }
+		
+        runningTotalDisplay.setText(String.format("Total Value: $%.2f", totalValue.floatValue()));
 	}
 	
 	private boolean addStockToMarket(String index) throws IOException {
