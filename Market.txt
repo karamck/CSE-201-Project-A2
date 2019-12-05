@@ -7,8 +7,4 @@ GOOGL
 DELL
 HPQ
 DIS
-<<<<<<< HEAD
 CLDR
-=======
-cldr
->>>>>>> 705c450b77040969c945159602515e667a4e4d90
