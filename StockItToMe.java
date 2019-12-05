@@ -171,11 +171,23 @@ public class StockItToMe extends JFrame{
 					}
 					userPane.revalidate();
 					userPane.repaint();
-				} else if (me.getClickCount() == 3) {
-
-					// Triple-click detected
-					int index = list.locationToIndex(me.getPoint());
-				}
+				} 
+				else if ( SwingUtilities.isRightMouseButton(me) ) {
+		            int row = list.locationToIndex(me.getPoint());
+		            System.out.println(row);
+					int counter = 0;
+					if(currentUser.isAdmin()) {
+						for(Stock s : market) {
+							if(counter == row) {
+								market.remove(s);
+								removeStockFromMarket(s);
+								fillMarketModel(market, indexes);
+							}
+							counter++;
+						}
+					}
+		        }
+				
 			}
 		});
 
@@ -478,7 +490,7 @@ public class StockItToMe extends JFrame{
 		filewriter.close();
 		return true;
 	}
-	private boolean removeStockToMarket(Stock s) {
+	private boolean removeStockFromMarket(Stock s) {
 		File unDB = new File("Market.txt");
 		String index = s.getIndex();
         try {
@@ -540,6 +552,8 @@ public class StockItToMe extends JFrame{
 		}
 
 	}
+	
+	
 	
 }		
 
