@@ -59,44 +59,44 @@ public class StockItToMe extends JFrame{
 	private JPanel loginPane;
 	private JPasswordField passwordField;
 	private JTextField textField;
-    private JTable table;  
-    private JPanel userPane;
-    private login l;
-    private User currentUser = new User();
-    private ArrayList<Stock> market;
+	private JTable table;  
+	private JPanel userPane;
+	private login l;
+	private User currentUser = new User();
+	private ArrayList<Stock> market;
 
 	JList<String> list = new JList<String>();
-	
-    private User user=new User();
 
-    /**
-     * Launch the application.
-     */
-    public static void main(String[] args) {
-    	System.out.println("hi");
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    StockItToMe frame = new StockItToMe();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace(); //comment
-                }
-            }
-        });
-    }
+	private User user=new User();
 
-    /**
-     * Create the frame.
-     * @throws IOException 
-     */
-    public StockItToMe() throws IOException {
-    	setForeground(Color.GREEN);
-    	setBackground(Color.BLACK);
-    	userScreen();
-    }
-    
-    @SuppressWarnings("unchecked")
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		System.out.println("hi");
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					StockItToMe frame = new StockItToMe();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace(); //comment
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 * @throws IOException 
+	 */
+	public StockItToMe() throws IOException {
+		setForeground(Color.GREEN);
+		setBackground(Color.BLACK);
+		userScreen();
+	}
+
+	@SuppressWarnings("unchecked")
 	public void userScreen() throws IOException {
     	
     	setTitle("Stock It To Me");
@@ -354,37 +354,37 @@ public class StockItToMe extends JFrame{
         Icon icon = new ImageIcon(getClass().getResource("stockItIcon.png"));         
         lblStockItToIco.setIcon(icon);
         panel_2.add(lblStockItToIco);
-        */
-        JPanel panel_3 = new JPanel();
-        sidebar.add(panel_3);
-        panel_3.setMaximumSize(new Dimension(300, 99999));
-        FlowLayout flowLayout = (FlowLayout) panel_3.getLayout();
-        flowLayout.setVgap(15);
-        flowLayout.setHgap(15);
-        flowLayout.setAlignment(FlowLayout.LEFT);
-        
-        
-        
-        //updates users stocks
-        
-        
-        portfolioList = new JList(portfolio);
-        portfolioList.setPreferredSize(new Dimension(300, 450));
-        portfolioList.setMaximumSize(new Dimension(300, 999999));
-       
-        portfolioList.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent me) {
-            	JList list = (JList)me.getSource();
-            	if (me.getClickCount() == 2) {
-            		
-                    // Double-click detected
-                    int index = list.locationToIndex(me.getPoint());
-                    System.out.println(index);
-                    int counter = 0;
-                    
-                    if (currentUser.isAdmin()) {
-                    	System.out.println("hi");
-                    	try {
+		 */
+		JPanel panel_3 = new JPanel();
+		sidebar.add(panel_3);
+		panel_3.setMaximumSize(new Dimension(300, 99999));
+		FlowLayout flowLayout = (FlowLayout) panel_3.getLayout();
+		flowLayout.setVgap(15);
+		flowLayout.setHgap(15);
+		flowLayout.setAlignment(FlowLayout.LEFT);
+
+
+
+		//updates users stocks
+
+
+		portfolioList = new JList(portfolio);
+		portfolioList.setPreferredSize(new Dimension(300, 450));
+		portfolioList.setMaximumSize(new Dimension(300, 999999));
+
+		portfolioList.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent me) {
+				JList list = (JList)me.getSource();
+				if (me.getClickCount() == 2) {
+
+					// Double-click detected
+					int index = list.locationToIndex(me.getPoint());
+					System.out.println(index);
+					int counter = 0;
+
+					if (currentUser.isAdmin()) {
+						System.out.println("hi");
+						try {
 							for(String r : AddRequestDB.getRequests()) {
 								if (counter == index) {
 									System.out.println(r);
@@ -403,78 +403,81 @@ public class StockItToMe extends JFrame{
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-                    }
-                    else {
-                    	for(Stock s : currentUser.stockList) {
-                          	if(counter == index) {
-	                    		System.out.println(s.getIndex());
-	                    		try {
-	                    			if(s.getAmount() == 1) {
-									currentUser.removeStockFromPortfolio(s.getIndex(),currentUser.getUserName());
-									currentUser.stockList.remove(s);
-	                    			} else {
-	                    				s.removeAnother();
-	                    				
-	                    			}
+					}
+					else {
+						for(Stock s : currentUser.stockList) {
+							if(counter == index) {
+								System.out.println(s.getIndex());
+								try {
+									if(s.getAmount() == 1) {
+										currentUser.removeStockFromPortfolio(s.getIndex(),currentUser.getUserName());
+										currentUser.stockList.remove(s);
+									} else {
+										s.removeAnother();
+										currentUser.deleteOneStock(s.getIndex(), currentUser.getUserName());
+									}
 								} catch (IOException e1) {
 									// TODO Auto-generated catch block
 									e1.printStackTrace();
 								}
-	                    		String[] theirs = currentUser.getStock();
-	                    		System.out.println(Arrays.toString(theirs));
-	                    		try {
+								String[] theirs = currentUser.getStock();
+								System.out.println(Arrays.toString(theirs));
+								try {
 									fillListModel(currentUser, portfolio);
 								} catch (IOException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
 								}
-	                    	}
-	                    	counter++;
-	                    }
-                    }
-                    panel_3.revalidate();
-                    panel_3.repaint();
-                    }
-                    else if (me.getClickCount() == 3) {
+							}
+							counter++;
+						}
+					}
+					panel_3.revalidate();
+					panel_3.repaint();
+				}
+				else if (me.getClickCount() == 3) {
 
-                    // Triple-click detected
-                    int index = list.locationToIndex(me.getPoint());
-                }
-            }
-         });
-        
-        scrollPane_1 = new JScrollPane(portfolioList);
-        scrollPane_1.setPreferredSize(new Dimension(300, 450));
-        scrollPane_1.setMaximumSize(new Dimension(300, 999999));
-        panel_3.add(scrollPane_1);
-        scrollPane_1.setAlignmentY(Component.TOP_ALIGNMENT);
-        scrollPane_1.setAlignmentX(Component.LEFT_ALIGNMENT);
-        scrollPane_1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        
-        //WE SHOULD CHANGE CONTENTS OF LIST BASED ON IF USER OR ADMIN IS LOGGED IN
-        
-        //JList<String> rlist = new JList<String>(AddRequestDB.getRequests());
-//        scrollPane_1.setColumnHeaderView(lblStockBowse_1);
-        
-    	//rlist.setPreferredSize(new Dimension(150, 440));
-    	//rlist.setMaximumSize(new Dimension(75, 590));
-    	//rlist.setBounds(48, 39, 1, 1);
-    	//scrollPane_1.setViewportView(rlist);
-    	
-        BigDecimal total = new BigDecimal(0);
+					// Triple-click detected
+					int index = list.locationToIndex(me.getPoint());
+				}
+			}
+		});
+
+		scrollPane_1 = new JScrollPane(portfolioList);
+		scrollPane_1.setPreferredSize(new Dimension(300, 450));
+		scrollPane_1.setMaximumSize(new Dimension(300, 999999));
+		panel_3.add(scrollPane_1);
+		scrollPane_1.setAlignmentY(Component.TOP_ALIGNMENT);
+		scrollPane_1.setAlignmentX(Component.LEFT_ALIGNMENT);
+		scrollPane_1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+		//WE SHOULD CHANGE CONTENTS OF LIST BASED ON IF USER OR ADMIN IS LOGGED IN
+
+		//JList<String> rlist = new JList<String>(AddRequestDB.getRequests());
+		//        scrollPane_1.setColumnHeaderView(lblStockBowse_1);
+
+		//rlist.setPreferredSize(new Dimension(150, 440));
+		//rlist.setMaximumSize(new Dimension(75, 590));
+		//rlist.setBounds(48, 39, 1, 1);
+		//scrollPane_1.setViewportView(rlist);
+
+
+		BigDecimal total = new BigDecimal(0);
         for (Stock s : currentUser.stockList) {
         	total = total.add(s.getValue());
         }
         JLabel runningTotalDisplay = new JLabel("Total Value: $" + total.floatValue());
         sidebar.add(runningTotalDisplay);
-        table = new JTable();
-        table.setPreferredScrollableViewportSize(new Dimension(150, 400));
 
-        //=====END SIDEBAR=====//
 
-}
-  
-	
+		table = new JTable();
+		table.setPreferredScrollableViewportSize(new Dimension(150, 400));
+
+		//=====END SIDEBAR=====//
+
+	}
+
+
 	private ArrayList<Stock> populateMarket() throws IOException {
 		Scanner scnr = new Scanner(new File("Market.txt"));
 		ArrayList<Stock> market = new ArrayList<Stock>();
@@ -562,7 +565,7 @@ public class StockItToMe extends JFrame{
 			indexes.addElement(s.toString());
 		}
 	}
-	
+
 	public void fillListModel(User user, DefaultListModel<String> portfolio) throws IOException{
 		if (user.isAdmin()) {
 			portfolio.clear();
@@ -578,7 +581,7 @@ public class StockItToMe extends JFrame{
 				portfolio.addElement(s);
 			}
 		}
-		
+
 	}
 	
 

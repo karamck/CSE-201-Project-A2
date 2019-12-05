@@ -33,7 +33,7 @@ public class User implements Account {
         stockList = populatePortfolio(userName);
     }
     
-    private ArrayList<Stock> populatePortfolio(String username) throws IOException {
+    public ArrayList<Stock> populatePortfolio(String username) throws IOException {
 		ArrayList<Stock> portfolio = new ArrayList<Stock>();
 		String file = username + ".txt";
 		Scanner scnr = new Scanner(new File(file));
@@ -103,8 +103,19 @@ public class User implements Account {
     }
     
     public void addStock(Stock stock) throws IOException {
-    	stockList.add(stock);
-    	addStockToPortfolio(stock.getIndex(), this.userName);
+//    	if(stockList.contains(stock)) {
+//    		for(Stock s : stockList) {
+//    			if(s.equals(stock)) {
+//    				s.addAnother();
+//    				addOneStock(s.getIndex(), this.userName);
+//    			}
+//    			
+//    		}
+//    	}else {
+    		stock.setAmount(1);
+    		stockList.add(stock);
+    		addStockToPortfolio(stock.getIndex(), this.userName);
+    	//}
     }
     public boolean removeStockFromPortfolio(String symbol, String user) throws IOException {
         symbol = symbol.trim();
@@ -152,7 +163,12 @@ public class User implements Account {
                 if (splitLine[0].equals(symbol)) {
                 	int temp = Integer.parseInt(splitLine[1]);
                 	temp--;
-                	String temps = symbol + " " + temp + "\n";
+                	String temps;
+                	if (count != 0) {
+                		temps = "\n" + symbol + " " + temp;
+                	}else {
+                		temps =symbol + " " + temp;
+                	}
                 	fileStuff+=temps;
                 }
                 else {
@@ -173,13 +189,53 @@ public class User implements Account {
         }
         return false;
     }
-
+    
+    public boolean addOneStock(String symbol, String user) throws IOException{
+    	symbol = symbol.trim();
+        String filename = user + ".txt";
+        File portf = new File(filename);
+        try {
+            int count = 0;
+            Scanner dbReader = new Scanner(portf);
+            String fileStuff = "";
+            while (dbReader.hasNextLine()) {
+                String line = dbReader.nextLine();
+                String[] splitLine = line.split(" ");
+                if (splitLine[0].equals(symbol)) {
+                	int temp = Integer.parseInt(splitLine[1]);
+                	temp++;
+                	String temps;
+                	if (count != 0) {
+                		temps = "\n" + symbol + " " + temp;
+                	}else {
+                		temps =symbol + " " + temp;
+                	}
+                	fileStuff+=temps;
+                }
+                else {
+                    if (count != 0) {
+                        fileStuff += "\n";
+                    }
+                    fileStuff += line;
+                }
+                count++;
+            }
+            dbReader.close();
+            FileWriter fw = new FileWriter(filename);
+            fw.write(fileStuff);
+            fw.close();
+            return true;
+        } catch (FileNotFoundException exception) {
+            System.out.println("File not found");
+        }
+        return false;
+    }
     
     private boolean addStockToPortfolio(String index, String username) throws IOException {
 		String file = username + ".txt";
 		FileWriter filewriter = new FileWriter(file,true);
 		filewriter.write(System.getProperty( "line.separator" ));
-		filewriter.write(index);
+		filewriter.write(index + " 1");
 		filewriter.close();
 		return true;
 	}
