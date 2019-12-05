@@ -226,7 +226,6 @@ public class StockItToMe extends JFrame{
 		btnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				refreshStocks(indexes, portfolio);
-				updatePortfolioTotal();
 			}
 		});
 
@@ -330,14 +329,10 @@ public class StockItToMe extends JFrame{
 
 		//=====END TOP-RIGHT BUTTON GROUP=====//
 
-		//=====SIDEBAR CODE=====//
-
 
 		JPanel sidebar = new JPanel();
 		userPane.add(sidebar, BorderLayout.EAST);
 		sidebar.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
- 
-        //=====END TOP-RIGHT BUTTON GROUP=====//
         
         //=====SIDEBAR CODE=====//
         
@@ -464,7 +459,7 @@ public class StockItToMe extends JFrame{
 		scrollPane_1.setAlignmentX(Component.LEFT_ALIGNMENT);
 		scrollPane_1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
-		runningTotalDisplay = new JLabel("Total Value: $0");
+		runningTotalDisplay = new JLabel("");
         sidebar.add(runningTotalDisplay);
 
 		//=====END SIDEBAR=====//
@@ -507,12 +502,11 @@ public class StockItToMe extends JFrame{
 	}
 	
 	private void updatePortfolioTotal() {
-		if (currentUser.isAdmin())
+		if (currentUser.isAdmin() || currentUser.getUserName().equals(""))
 		{
 			runningTotalDisplay.setText("");
 			return;
 		}
-		System.out.println("Yeet");
 		totalValue = new BigDecimal(0);
         for (Stock s : currentUser.stockList) {
         	totalValue = totalValue.add(s.getValue());
@@ -575,7 +569,11 @@ public class StockItToMe extends JFrame{
 	}
 
 	public void fillListModel(User user, DefaultListModel<String> portfolio) throws IOException{
-		if (user.isAdmin()) {
+		if (user.getUserName().equals("")){
+			portfolio.clear();
+			portfolio.addElement("Your Stocks will be listed here");
+		}
+		else if (user.isAdmin()) {
 			portfolio.clear();
 			String[] requests = AddRequestDB.getRequests();
 			for(String s : requests) {
